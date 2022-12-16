@@ -28,7 +28,7 @@
 
                             <div class="col-md-5">
                                 <select name="sekolah" id="sekolah" class="form-control @error('sekolah') is-invalid @enderror">
-                                    <option value="">Pilih asal sekolah</option>
+                                    <option disabled selected>Pilih asal sekolah</option>
                                     @foreach ($sekolahs as $sekolah)
                                     <option value="{{ $sekolah->sekolah }}" {{ old('sekolah') == $sekolah->sekolah ? 'selected' : null }} >{{ $sekolah->sekolah }}</option>
                                  @endforeach

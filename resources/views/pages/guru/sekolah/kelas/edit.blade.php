@@ -7,8 +7,8 @@
     </header>
   </section>
 
-  <h5 class="text-danger" style="font-style: italic">Gunakan angka seperti contoh di bawah ini !</h5>
-  <h6 class="px-1">CONTOH : <span style="font-weight:bold">1</span> </h6>
+  <h5 class="text-danger" style="font-style: italic">Gunakan angka atau huruf kapital seperti contoh di bawah ini !</h5>
+  <h6 class="px-1">CONTOH : <span style="font-weight:bold">1 atau A</span> </h6>
 
   <div class="row mt-4">
     <div class="col">

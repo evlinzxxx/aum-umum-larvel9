@@ -16,6 +16,8 @@ class Guru extends Authenticatable
 
     protected $guard = "guru";
 
+    protected $keyType = 'string';
+
     protected $fillable = [
         'sekolah', 'nip', 'nama', 'gender', 'email', 'password', 'url_photo',
     ];

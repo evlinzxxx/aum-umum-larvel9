@@ -19,6 +19,8 @@ class Siswa extends Authenticatable
 
     protected $guard = "user";
 
+    protected $keyType = 'string';
+
     /**
      * The attributes that are mass assignable.
      *

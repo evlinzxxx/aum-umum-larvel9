@@ -42,7 +42,7 @@
         <div class="form-group row mb-3" >
             <label for="gender" class="px-1 mb-2" >Jenis Kelamin</label>
             <select name="gender" id="gender" class="form-control  @error('gender') is-invalid @enderror">
-                <option>Pilih jenis kelamin</option>
+                <option disabled selected>Pilih jenis kelamin</option>
                 <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : null }}>Laki-laki</option>
                 <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : null }}>Perempuan</option>
             </select>

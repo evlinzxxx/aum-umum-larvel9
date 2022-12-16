@@ -17,7 +17,7 @@
                 <div class="w-full px-3">
                 <label for="category_id" class="px-1 mb-2" >Kategori</label>
                 <select name="kode_kategori" id="kode_kategori" class="form-control @error('kode_kategori') is-invalid @enderror">
-                    <option value="">Pilih Kategori</option>
+                    <option disabled selected>Pilih Kategori</option>
                         @foreach ($kategoris as $kategori)
                         <option value="{{ $kategori->kode_kategori }}" {{ old('kode_kategori') == $kategori->kode_kategori ? 'selected' : null }}>({{ $kategori->kode_kategori }})  {{ $kategori->nama_kategori }}</option>
                         @endforeach

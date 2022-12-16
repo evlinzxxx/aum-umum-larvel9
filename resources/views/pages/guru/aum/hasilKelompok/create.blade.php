@@ -34,7 +34,7 @@
 <div class="col-4">
     <label class="visually" style="font-size: 14px"  for="sekolah">Sekolah</label>
     <select class="form-select" name="sekolah" id="sekolah">
-        <option> {{ $request->sekolah }}</option>
+        <option disabled selected> {{ $request->sekolah }}</option>
         @foreach ($sekolahs as $sekolah)
         <option value="{{ $sekolah->sekolah }}">{{ $sekolah->sekolah }}</option>
         @endforeach
@@ -43,7 +43,7 @@
 <div class="col-2">
     <label class="visually" style="font-size: 14px" for="tingkatan">Tingkatan</label>
     <select class="form-select" name="tingkatan" id="tingkatan">
-        <option>{{ $request->tingkatan }}</option>
+        <option disabled selected>{{ $request->tingkatan }}</option>
         @foreach ($tingkatans as $tingkatan)
         <option value="{{ $tingkatan->tingkatan }}">{{ $tingkatan->tingkatan }}</option>
         @endforeach
@@ -52,7 +52,7 @@
 <div class="col-2">
     <label class="visually" style="font-size: 14px" for="jurusan">Jurusan</label>
     <select class="form-select" name="jurusan" id="jurusan">
-        <option>{{ $request->jurusan }}</option>
+        <option disabled selected>{{ $request->jurusan }}</option>
         @foreach ($jurusans as $jurusan)
         <option value="{{ $jurusan->jurusan }}">{{ $jurusan->jurusan }}</option>
         @endforeach
@@ -61,7 +61,7 @@
 <div class="col-2">
     <label class="visually" style="font-size: 14px" for="kelas">Kelas</label>
     <select class="form-select" name="kelas" id="kelas">
-        <option>{{ $request->kelas }}</option>
+        <option disabled selected>{{ $request->kelas }}</option>
         @foreach ($kelases as $kelas)
         <option value="{{ $kelas->kelas }}">{{ $kelas->kelas }}</option>
         @endforeach

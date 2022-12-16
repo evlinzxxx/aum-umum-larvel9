@@ -26,9 +26,11 @@ class LembarJawabanController extends Controller
 
         $jawaban = LembarJawaban::where('nisn', $siswa_nisn)->get();
 
+        $total = count($jawaban);
+
         Session::put('pertanyaan_url', request()->fullUrl());
 
-        return view('pages.siswa.lembarJawaban.index', compact(['pertanyaans','pertanyaan', 'siswa', 'date', 'jawaban']));
+        return view('pages.siswa.lembarJawaban.index', compact(['pertanyaans','pertanyaan', 'siswa', 'date', 'jawaban', 'total']));
     }
 
 

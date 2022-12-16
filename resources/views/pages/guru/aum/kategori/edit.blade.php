@@ -8,7 +8,8 @@
   </section>
 
   <h5 class="text-danger" style="font-style: italic">Sesuaikan format kategori pertanyaan AUM Umum seperti contoh di bawah ini !</h5>
-  <h6 class="px-1">CONTOH : <span style="font-weight:bold">Jasmani dan Kesehatan (JDK)</span> </h6>
+  <h6 class="px-1">CONTOH KODE KATEGORI : <span style="font-weight:bold">JDK</span> </h6>
+  <h6 class="px-1">CONTOH NAMA KATEGORI : <span style="font-weight:bold">Jasmani dan Kesehatan</span> </h6>
 
   <div class="row mt-4">
     <div class="col">

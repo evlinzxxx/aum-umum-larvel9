@@ -12,6 +12,8 @@ class Kelas extends Model
 
     protected $primaryKey = "kelas";
 
+    protected $keyType = 'string';
+
     protected $fillable = [
         'kelas',
     ];

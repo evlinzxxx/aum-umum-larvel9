@@ -259,12 +259,12 @@ class HasilKelompokController extends Controller
         $pdf = PDF::loadView(
             'pages/guru/aum/hasilKelompok/cetak',
             compact([
-                'html','data', 'kategories', 'sekolah', 'jurusan', 'tingkatan', 'kelas', 'hasil',
+                'html', 'data', 'kategories', 'sekolah', 'jurusan', 'tingkatan', 'kelas', 'hasil',
                 'jml_pertanyaan', 'jml_max_masalah', 'jml_min_masalah', 'jml_total_masalah',
                 'jml_rata_masalah', 'total_responden', 'persen_max', 'kode_masalah', 'hasils'
             ])
         );
-        
+
         $pdf->render();
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream('Analisis-AUM-Umum.pdf');

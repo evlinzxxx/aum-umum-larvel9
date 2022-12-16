@@ -57,7 +57,7 @@
                 <th>Action</th>
             </tr>
         </thead>
-        @foreach ($kelases as $kelas)
+        @foreach ($kelass as $kelas)
         <tbody>    
             <tr>
                 <td>{{ $kelas->kelas }}</td>
@@ -70,7 +70,7 @@
                     <a href="{{ route('dashboard.kelas.edit',['kela'=>$kelas->kelas]) }}" class="btn btn-warning">
                 <i class="fas fa-pen"></i>
                 </a>
-                <button type="submit" class="btn btn-danger" onclick="if(confirm('Sure to delete?')){
+                <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin hapus data?')){
                     event.preventDefault();
                     document.getElementById('delete-form{{ $kelas->kelas }}').submit();
                 }else{

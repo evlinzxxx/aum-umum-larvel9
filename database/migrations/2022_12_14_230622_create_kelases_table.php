@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('kelases', function (Blueprint $table) {
-            $table->integer('kelas')->primary();
+            $table->string('kelas')->primary();
             $table->timestamps();
         });
     }

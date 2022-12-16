@@ -70,7 +70,7 @@
                 <a href="{{ route('dashboard.tingkatan.edit',['tingkatan'=>$tingkatan->tingkatan]) }}" class="btn btn-warning">
                 <i class="fas fa-pen"></i>
                 </a>
-                <button type="submit" class="btn btn-danger" onclick="if(confirm('Sure to delete?')){
+                <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin hapus data?')){
                     event.preventDefault();
                     document.getElementById('delete-form{{ $tingkatan->tingkatan }}').submit();
                 }else{

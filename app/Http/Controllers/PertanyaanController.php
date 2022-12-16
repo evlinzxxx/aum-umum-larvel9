@@ -14,11 +14,18 @@ class PertanyaanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $re_kategori = $request->cari_kategori;
+
+        if ($re_kategori != null) {
+            $pertanyaans = Pertanyaan::where('kode_kategori', $re_kategori)->paginate(50);
+        } elseif ($re_kategori == null ) {
+            $pertanyaans = Pertanyaan::paginate(10);
+        }
+
         $kategoris = KategoriMasalah::all();
-        $pertanyaans = Pertanyaan::paginate(10);
-        return view('pages.guru.aum.pertanyaan.index', compact(['kategoris', 'pertanyaans']));
+        return view('pages.guru.aum.pertanyaan.index', compact(['kategoris', 'pertanyaans', 'request']));
     }
 
     /**

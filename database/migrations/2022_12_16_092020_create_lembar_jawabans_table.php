@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hasil_kelompoks', function (Blueprint $table) {
-            $table->increments('id_ak');
+        Schema::create('lembar_jawabans', function (Blueprint $table) {
+            $table->id('id_jawaban');
+            $table->string('nisn');
             $table->string('sekolah');
             $table->string('tingkatan');
             $table->string('jurusan');
-            $table->integer('kelas');
-            $table->char('kode_kategori',3);
-            $table->integer('jumlah_tertinggi');
-            $table->integer('jumlah_terendah');
-            $table->integer('jumlah_masalah');
-            $table->double('rata_jumlah');
+            $table->string('kelas');
+            $table->char('kode_kategori', 3);
+            $table->char('kode_pertanyaan', 3);
+            $table->enum('jawaban', ['Ya', 'Tidak']);
             $table->timestamps();
         });
     }
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hasil_kelompoks');
+        Schema::dropIfExists('lembar_jawabans');
     }
 };

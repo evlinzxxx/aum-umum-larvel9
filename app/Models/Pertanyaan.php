@@ -22,9 +22,9 @@ class Pertanyaan extends Model
     {
         return $this->hasMany(KategoriMasalah::class, 'kode_kategori', 'kode_kategori');
     }
-    public function jawaban()
+    public function jawabans()
     {
-        return $this->hasMany(HasilIndividu::class, 'kode_pertanyaan', 'kode_pertanyaan');
+        return $this->hasMany(LembarJawaban::class, 'kode_pertanyaan', 'kode_pertanyaan');
     }
 }
 

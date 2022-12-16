@@ -29,10 +29,13 @@ return new class extends Migration
     public function down()
     {
         Schema::table('siswas', function (Blueprint $table) {
-            $table->dropColumn('sekolah');
-            $table->dropColumn('tingkatan');
-            $table->dropColumn('jurusan');
-            $table->dropColumn('kelas');
+                $table->dropColumn('sekolah');
+                $table->dropColumn('tingkatan');
+                $table->dropColumn('jurusan');
+                $table->dropColumn('kelas');
         });
     }
 };
+
+ 
+

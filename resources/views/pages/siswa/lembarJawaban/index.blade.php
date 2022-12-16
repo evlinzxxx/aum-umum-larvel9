@@ -61,6 +61,7 @@
     </h2>
     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
+        <p class="fw-bold text-success"><i class="bi bi-check-square-fill px-2"></i>Jumlah yang sudah dijawab : {{ $total }}</p>
         @foreach ($jawaban as $answer)
         <a class="badge text-bg-dark" style="font-weight: bold">{{ $answer->kode_pertanyaan }} <span class="px-1"></span>{{ $answer->jawaban }}</a> <span class="px-4"></span>
         @endforeach
@@ -98,18 +99,18 @@
           @foreach ($pertanyaans as $pertanyaan)
           @foreach ($pertanyaan->categories as $pertanyaa)
           <div class="card-header">
-          <p class="fw-bold text-success">{{ $pertanyaa->nama_kategori }}</p></div>
-          <p class="px-3 mt-2" value="{{ $pertanyaan->kode_pertanyaan }}"><span class="px-2">{{ $pertanyaan->pertanyaan }}</span> </p>
-          <div class="px-3">
-            <input type="hidden" name="nisn[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->nisn }}">
-            <input type="hidden" name="sekolah[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->sekolah }}">
-            <input type="hidden" name="tingkatan[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->tingkatan }}">
-            <input type="hidden" name="jurusan[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->jurusan }}">
-            <input type="hidden" name="kelas[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->kelas }}">
-                  <input type="hidden" name="kode_kategori[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $pertanyaan->kode_kategori }}">
-                  <input type="hidden" name="kode_pertanyaan[{{$pertanyaan->kode_pertanyaan}}]" value="{{$pertanyaan->kode_pertanyaan}}">
-                  <div class="form-check px-5">
-                    <input class="form-check-input" type="radio" name="jawaban[{{ $pertanyaan->kode_pertanyaan }}]" id="Ya" value="Ya">
+            <p class="fw-bold text-success">{{ $pertanyaa->nama_kategori }}</p></div>
+            <p class="px-3 mt-2" value="{{ $pertanyaan->kode_pertanyaan }}">{{ $pertanyaan->kode_pertanyaan }}<span class="px-2">{{ $pertanyaan->pertanyaan }}</span> </p>
+            <div class="px-3">
+              <input type="hidden" name="nisn[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->nisn }}">
+              <input type="hidden" name="sekolah[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->sekolah }}">
+              <input type="hidden" name="tingkatan[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->tingkatan }}">
+              <input type="hidden" name="jurusan[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->jurusan }}">
+              <input type="hidden" name="kelas[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $siswa->kelas }}">
+              <input type="hidden" name="kode_kategori[{{ $pertanyaan->kode_pertanyaan }}]" value="{{ $pertanyaan->kode_kategori }}">
+              <input type="hidden" name="kode_pertanyaan[{{$pertanyaan->kode_pertanyaan}}]" value="{{$pertanyaan->kode_pertanyaan}}">
+              <div class="form-check px-5">
+                <input class="form-check-input" type="radio" name="jawaban[{{ $pertanyaan->kode_pertanyaan }}]" id="Ya" value="Ya">
                     <label class="form-check-label" for="Ya">
                       Ya
                     </label>

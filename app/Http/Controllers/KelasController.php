@@ -15,9 +15,9 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $kelases = Kelas::all();
+        $kelass = Kelas::all();
 
-        return view('pages.guru.sekolah.kelas.index', compact(['kelases']));
+        return view('pages.guru.sekolah.kelas.index', compact(['kelass']));
     }
 
     /**
@@ -40,9 +40,9 @@ class KelasController extends Controller
     {
         $kelas = $request->all();
 
-        $kelas = Kelas::create($kelas);
+        $kelases = Kelas::create($kelas);
 
-        if ($kelas) {
+        if ($kelases) {
             return redirect()->route('dashboard.kelas.index')->with('success', 'Tambah data success!');
         } else {
             return redirect()->route('dashboard.kelas.index')->with('failed', 'Tambah data failed!');

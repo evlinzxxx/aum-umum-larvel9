@@ -8,6 +8,9 @@
     </header>
   </section>
 
+  <h5 class="text-danger px-3" style="font-style: italic">Gunakan tiga digit angka untuk kode pertanyaan seperti contoh di bawah ini !</h5>
+  <h6 class="px-3">CONTOH : <span style="font-weight:bold">001</span> </h6>
+
 
   <div class="row mt-4">
     <div class="col">
@@ -19,7 +22,7 @@
                 <label for="kode_kategori" class="px-1 mb-2" >Kategori</label>
                 <br>
                 <select name="kode_kategori" id="kode_kategori" class="form-control @error('kode_kategori') is-invalid @enderror">
-                    <option value="">Pilih Kategori</option>
+                    <option disabled selected>Pilih Kategori</option>
                         @foreach ($kategoris as $kategori)
                             <option value="{{ $kategori->kode_kategori }}" {{ old('kode_kategori') == $kategori->kode_kategori ? 'selected' : null }} >({{ $kategori->kode_kategori }})  {{ $kategori->nama_kategori }}</option>
                         @endforeach

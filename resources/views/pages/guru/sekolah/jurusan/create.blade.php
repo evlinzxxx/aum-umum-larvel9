@@ -9,7 +9,7 @@
   </section>
 
   <h5 class="text-danger" style="font-style: italic">Gunakan huruf kapital seperti contoh di bawah ini !</h5>
-  <h6 class="px-1">CONTOH : <span style="font-weight:bold">IPA</span> </h6>
+  <h6 class="px-1">CONTOH : <span style="font-weight:bold">MIPA</span> </h6>
 
   <div class="row mt-4">
     <div class="col">

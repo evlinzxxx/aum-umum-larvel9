@@ -41,6 +41,26 @@
     </div>
 </div>
 
+<div class="card p-4 mb-5">
+    <h3>Cari Data</h3>
+    <form action="{{ route('dashboard.pertanyaan.index') }}" method="get">
+<div class="row">
+<div class="col-4">
+    <label class="visually" style="font-size: 14px"  for="kategori">Kategori</label>
+    <select class="form-select" name="cari_kategori" id="kategori">
+        <option disabled selected> {{ $request->cari_kategori }}</option>
+        @foreach ($kategoris as $kategori)
+        <option value="{{ $kategori->kode_kategori }}">({{ $kategori->kode_kategori }}) {{ $kategori->nama_kategori }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="col-5 mt-4">
+  <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass px-2"></i>Cari</button>
+</div>
+</div>
+</form>
+</div>
+
 <div class="card-body">
     <table id="datatables" class="table table-bordered" >
         <thead>
@@ -66,7 +86,7 @@
                 <a href="{{ route('dashboard.pertanyaan.edit',['pertanyaan'=>$pertanyaan->kode_pertanyaan]) }}" class="btn btn-warning">
                 <i class="fas fa-pen"></i>
                 </a>
-                <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin Hapus?')){
+                <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin hapus data?')){
                     event.preventDefault();
                     document.getElementById('delete-form{{ $pertanyaan->kode_pertanyaan }}').submit();
                 }else{

@@ -170,7 +170,7 @@ class SiswaController extends Controller
             'jurusan' => 'required|exists:jurusans,jurusan',
             'kelas' => 'required|exists:kelases,kelas',
             'gender' => 'in:Laki-laki,Perempuan',
-            'email' => 'string|email|max:255',
+            'email' => 'nullable|email|max:255',
             'url_photo' => 'image|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('siswas', function (Blueprint $table) {
-            $table->bigInteger('nisn')->primary()->unique();
+            $table->string('nisn')->primary()->unique();
             $table->string('sekolah');
             $table->string('nama');
             $table->string('tingkatan');
             $table->string('jurusan');
-            $table->integer('kelas');
+            $table->string('kelas');
             $table->enum('gender', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('email')->nullable();
             $table->string('password');

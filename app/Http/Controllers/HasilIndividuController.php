@@ -161,7 +161,7 @@ class HasilIndividuController extends Controller
 
 
 
-        return view('pages.siswa.lembarJawaban.show', compact(['dataCharts','siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        return view('pages.siswa.lembarJawaban.show', compact(['dataCharts', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
     }
 
 
@@ -222,7 +222,7 @@ class HasilIndividuController extends Controller
         $masalah = implode(',', $kode);
 
         $html = '<img src="' . $_POST['chart_input'] . '">';
-        $pdf = PDF::loadView('pages/siswa/lembarJawaban/cetak', compact(['html','siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        $pdf = PDF::loadView('pages/siswa/lembarJawaban/cetak', compact(['html', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
         $pdf->render();
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream('Analisis-AUM-Umum.pdf');
@@ -342,10 +342,9 @@ class HasilIndividuController extends Controller
         $masalah = implode(',', $kode);
 
         $html = '<img src="' . $_POST['chart_inputt'] . '">';
-        $pdf = PDF::loadView('pages/guru/aum/hasilIndividu/cetak', compact(['html','siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        $pdf = PDF::loadView('pages/guru/aum/hasilIndividu/cetak', compact(['html', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
         $pdf->render();
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream('Analisis-AUM-Umum.pdf');
     }
-
 }
