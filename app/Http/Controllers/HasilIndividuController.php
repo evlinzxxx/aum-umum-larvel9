@@ -27,9 +27,9 @@ class HasilIndividuController extends Controller
         $re_kelas = $request->cari_kelas;
 
         if ($re_sekolah != null && $re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
-            $siswas = Siswa::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->get();
+            $siswas = Siswa::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->paginate(40);
         } elseif ($re_sekolah == null && $re_tingkatan == null && $re_jurusan == null && $re_kelas == null) {
-            $siswas = Siswa::all();
+            $siswas = Siswa::paginate(20);
         }
 
         $sekolahs = Sekolah::all();
@@ -116,7 +116,7 @@ class HasilIndividuController extends Controller
 
         $datee = LembarJawaban::where('nisn', $siswa_nisn)->pluck('created_at')->first();
 
-        $date = $datee->format('d M Y');
+        $date = $datee->isoFormat('D MMMM Y');
 
         $kategoris = KategoriMasalah::all()->sortBy('created_at');
         $kategori = $kategoris->pluck('kode_kategori');
@@ -133,6 +133,9 @@ class HasilIndividuController extends Controller
 
         $jml_ya = HasilIndividu::where('nisn', $siswa_nisn)->pluck('jumlah_ya')->count();
 
+        $jml_y = HasilIndividu::where('nisn', $siswa_nisn)->pluck('jumlah_ya')->toArray();
+        $total_mslh = array_sum($jml_y);
+
         $jml_pertanyaan = Pertanyaan::all()->count();
 
         $persen = HasilIndividu::where('nisn', $siswa_nisn)->pluck('persentase_masalah')->toArray();
@@ -141,16 +144,29 @@ class HasilIndividuController extends Controller
 
         $maxpersen = max($persenn);
         $p = $maxpersen->first();
-
+        
+        
+        $jmya = HasilIndividu::where('nisn', $siswa_nisn)->where('persentase_masalah', $p)->pluck('jumlah_ya')->toArray();
+        
+        $ok = max($jmya);
+        
         $cari_kode = (HasilIndividu::where('nisn', $siswa_nisn)->where('persentase_masalah', $p)->pluck('kode_kategori'));
 
-        $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
+        $hitung = $cari_kode->count();
+
+        if($hitung>1){
+                $lihat = HasilIndividu::where('nisn', $siswa_nisn)->where('persentase_masalah', $p)->where('jumlah_ya', $ok)->pluck('kode_kategori')->first();
+                $kat = KategoriMasalah::where('kode_kategori', $lihat)->pluck('nama_kategori');
+            }else{
+                $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
+        }
+
         $kate = [];
         foreach ($kat as $value) {
             $kate[] = $value;
         }
         $kateg = implode(',', $kate);
-
+        
         $max2 = max($kp);
         $m = $max2->pluck('kode_pertanyaan');
         $kode = [];
@@ -158,10 +174,8 @@ class HasilIndividuController extends Controller
             $kode[] = $value;
         }
         $masalah = implode(',', $kode);
-
-
-
-        return view('pages.siswa.lembarJawaban.show', compact(['dataCharts', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        
+        return view('pages.siswa.lembarJawaban.show', compact(['dataCharts','total_mslh', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
     }
 
 
@@ -180,7 +194,7 @@ class HasilIndividuController extends Controller
 
         $datee = LembarJawaban::where('nisn', $siswa_nisn)->pluck('created_at')->first();
 
-        $date = $datee->format('d M Y');
+        $date = $datee->isoFormat('D MMMM Y');
 
         $kategoris = KategoriMasalah::all()->sortBy('created_at');
         $kategori = $kategoris->pluck('kode_kategori');
@@ -193,7 +207,12 @@ class HasilIndividuController extends Controller
             $persenn[] = HasilIndividu::where('nisn', $siswa_nisn)->where('kode_kategori', $k)->pluck('persentase_masalah');
         }
 
+        $dataCharts = HasilIndividu::where('nisn', $siswa_nisn)->get();
+
         $jml_ya = HasilIndividu::where('nisn', $siswa_nisn)->pluck('jumlah_ya')->count();
+
+        $jml_y = HasilIndividu::where('nisn', $siswa_nisn)->pluck('jumlah_ya')->toArray();
+        $total_mslh = array_sum($jml_y);
 
         $jml_pertanyaan = Pertanyaan::all()->count();
 
@@ -203,8 +222,22 @@ class HasilIndividuController extends Controller
 
         $maxpersen = max($persenn);
         $p = $maxpersen->first();
-
+        
+        
+        $jmya = HasilIndividu::where('nisn', $siswa_nisn)->where('persentase_masalah', $p)->pluck('jumlah_ya')->toArray();
+        
+        $ok = max($jmya);
+        
         $cari_kode = (HasilIndividu::where('nisn', $siswa_nisn)->where('persentase_masalah', $p)->pluck('kode_kategori'));
+
+        $hitung = $cari_kode->count();
+
+        if($hitung>1){
+                $lihat = HasilIndividu::where('nisn', $siswa_nisn)->where('persentase_masalah', $p)->where('jumlah_ya', $ok)->pluck('kode_kategori')->first();
+                $kat = KategoriMasalah::where('kode_kategori', $lihat)->pluck('nama_kategori');
+            }else{
+                $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
+        }
 
         $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
         $kate = [];
@@ -222,7 +255,7 @@ class HasilIndividuController extends Controller
         $masalah = implode(',', $kode);
 
         $html = '<img src="' . $_POST['chart_input'] . '">';
-        $pdf = PDF::loadView('pages/siswa/lembarJawaban/cetak', compact(['html', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        $pdf = PDF::loadView('pages/siswa/lembarJawaban/cetak', compact(['html','total_mslh', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
         $pdf->render();
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream('Analisis-AUM-Umum.pdf');
@@ -244,7 +277,7 @@ class HasilIndividuController extends Controller
         }
 
         $datee = LembarJawaban::where('nisn', $nisn)->pluck('created_at')->first();
-        $date = $datee->format('d M Y');
+        $date = $datee->isoFormat('D MMMM Y');
         $kategoris = KategoriMasalah::all()->sortBy('created_at');
         $kategori = $kategoris->pluck('kode_kategori');
 
@@ -256,7 +289,12 @@ class HasilIndividuController extends Controller
             $persenn[] = HasilIndividu::where('nisn', $nisn)->where('kode_kategori', $k)->pluck('persentase_masalah');
         }
 
+        $dataCharts = HasilIndividu::where('nisn', $nisn)->get();
+
         $jml_ya = HasilIndividu::where('nisn', $nisn)->pluck('jumlah_ya')->count();
+
+        $jml_y = HasilIndividu::where('nisn', $nisn)->pluck('jumlah_ya')->toArray();
+        $total_mslh = array_sum($jml_y);
 
         $jml_pertanyaan = Pertanyaan::all()->count();
 
@@ -266,10 +304,22 @@ class HasilIndividuController extends Controller
 
         $maxpersen = max($persenn);
         $p = $maxpersen->first();
-
+        
+        
+        $jmya = HasilIndividu::where('nisn', $nisn)->where('persentase_masalah', $p)->pluck('jumlah_ya')->toArray();
+        
+        $ok = max($jmya);
+        
         $cari_kode = (HasilIndividu::where('nisn', $nisn)->where('persentase_masalah', $p)->pluck('kode_kategori'));
 
-        $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
+        $hitung = $cari_kode->count();
+
+        if($hitung>1){
+                $lihat = HasilIndividu::where('nisn', $nisn)->where('persentase_masalah', $p)->where('jumlah_ya', $ok)->pluck('kode_kategori')->first();
+                $kat = KategoriMasalah::where('kode_kategori', $lihat)->pluck('nama_kategori');
+            }else{
+                $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
+        }
         $kate = [];
         foreach ($kat as $value) {
             $kate[] = $value;
@@ -284,7 +334,7 @@ class HasilIndividuController extends Controller
         }
         $masalah = implode(',', $kode);
 
-        return view('pages.guru.aum.hasilIndividu.show', compact(['siswa', 'dataCharts', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        return view('pages.guru.aum.hasilIndividu.show', compact(['siswa', 'dataCharts', 'total_mslh' , 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
     }
 
     public function cetakGuru($nisn)
@@ -301,8 +351,7 @@ class HasilIndividuController extends Controller
         }
 
         $datee = LembarJawaban::where('nisn', $nisn)->pluck('created_at')->first();
-        $date = $datee->format('d M Y');
-
+        $date = $datee->isoFormat('D MMMM Y');
         $kategoris = KategoriMasalah::all()->sortBy('created_at');
         $kategori = $kategoris->pluck('kode_kategori');
         foreach ($kategori as $k) {
@@ -313,7 +362,12 @@ class HasilIndividuController extends Controller
             $persenn[] = HasilIndividu::where('nisn', $nisn)->where('kode_kategori', $k)->pluck('persentase_masalah');
         }
 
+        $dataCharts = HasilIndividu::where('nisn', $nisn)->get();
+
         $jml_ya = HasilIndividu::where('nisn', $nisn)->pluck('jumlah_ya')->count();
+
+        $jml_y = HasilIndividu::where('nisn', $nisn)->pluck('jumlah_ya')->toArray();
+        $total_mslh = array_sum($jml_y);
 
         $jml_pertanyaan = Pertanyaan::all()->count();
 
@@ -323,8 +377,22 @@ class HasilIndividuController extends Controller
 
         $maxpersen = max($persenn);
         $p = $maxpersen->first();
-
+        
+        
+        $jmya = HasilIndividu::where('nisn', $nisn)->where('persentase_masalah', $p)->pluck('jumlah_ya')->toArray();
+        
+        $ok = max($jmya);
+        
         $cari_kode = (HasilIndividu::where('nisn', $nisn)->where('persentase_masalah', $p)->pluck('kode_kategori'));
+
+        $hitung = $cari_kode->count();
+
+        if($hitung>1){
+                $lihat = HasilIndividu::where('nisn', $nisn)->where('persentase_masalah', $p)->where('jumlah_ya', $ok)->pluck('kode_kategori')->first();
+                $kat = KategoriMasalah::where('kode_kategori', $lihat)->pluck('nama_kategori');
+            }else{
+                $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
+        }
 
         $kat = KategoriMasalah::where('kode_kategori', $cari_kode)->pluck('nama_kategori');
         $kate = [];
@@ -342,7 +410,7 @@ class HasilIndividuController extends Controller
         $masalah = implode(',', $kode);
 
         $html = '<img src="' . $_POST['chart_inputt'] . '">';
-        $pdf = PDF::loadView('pages/guru/aum/hasilIndividu/cetak', compact(['html', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
+        $pdf = PDF::loadView('pages/guru/aum/hasilIndividu/cetak', compact(['html', 'total_mslh', 'siswa', 'kategori', 'kategoris', 'data', 'date', 'hasils', 'hasil', 'jml_ya', 'jml_persen', 'jml_pertanyaan', 'kateg', 'p',  'masalah']));
         $pdf->render();
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream('Analisis-AUM-Umum.pdf');

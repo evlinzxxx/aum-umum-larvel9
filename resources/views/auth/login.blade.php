@@ -21,28 +21,31 @@
                                 height="200px"
                                 class="mb-3"
                               />  
-                        </div>
+                            </div>
                         </div>
                 <br>
+                {{-- Start alert data --}}
                 <div class="row mb-0">
                     <div class="col-md-7 offset-md-3">
                         @if (session('success'))
-                    <div class="alert alert-success alert-dismissible  fade show">
+                        <div class="alert alert-success alert-dismissible  fade show">
                         {{ session('success') }}
-                        <button type="button" class="btn-close px-9" data-bs-dismiss="alert" aria-label="Close">
-                        </button>
+                        <button type="button" class="btn-close px-9" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                        @elseif(session('failed'))
-                        <div class="alert alert-danger alert-dismissible fade show" >
-                            {{ session('failed') }}
-                        </div>
+                    @elseif(session('failed'))
+                    <div class="alert alert-danger alert-dismissible fade show" >
+                        {{ session('failed') }}
+                        <button type="button" class="btn-close px-9" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     @endif
-                    </div>
                 </div>
+            </div>
+            {{-- End alert data --}}
 
-                        <div class="row mb-3">
-                            <label for="number" class="col-md-3 col-form-label text-md-end">{{ __('NISN / NIP') }}</label>
-
+            {{-- Start form login --}}
+            <div class="row mb-3">
+                <label for="number" class="col-md-3 col-form-label text-md-end">{{ __('NISN / NIP') }}</label>
+                
                             <div class="col-md-7">
                                 <input id="number" type="text" class="form-control @error('number') is-invalid @enderror" name="number" value="{{ old('number') }}"autofocus>
 
@@ -59,9 +62,9 @@
 
                             <div class="col-md-7">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                                
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -83,6 +86,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -90,5 +94,6 @@
     </div>
 </div>
 
+{{-- End form login --}}
 
 @endsection

@@ -72,7 +72,7 @@ class GuruController extends Controller
             'sekolah' => 'required|exists:sekolahs,sekolah',
             'nama' => 'required|string|max:255',
             'gender' => 'in:Laki-laki,Perempuan',
-            'email' => 'string|email|max:255',
+            'email' => 'nullable|email|max:255',
             'url_photo' => 'image|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 

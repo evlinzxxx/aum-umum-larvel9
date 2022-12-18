@@ -23,6 +23,7 @@
                         </div>
                         <br>
 
+                        {{-- Start form registerGuru --}}
                         <div class="row mb-3">
                             <label for="sekolah" class="col-md-4 col-form-label text-md-end">Asal Sekolah</label>
 
@@ -111,4 +112,5 @@
         </div>
     </div>
 </div>
+{{-- End form registerGuru --}}
 @endsection

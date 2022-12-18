@@ -10,39 +10,36 @@
       {{-- Start Student Information --}}
       <div class="card">
         <div class="title p-2 d-flex" style="background-color: #e8f6ffd1">
-          <div class="mt-2 px-4"><img src="{{ asset('uploads/siswa/' . $siswa->url_photo) }}" alt="Admin" class="rounded-circle" width="100"></div>
-          <div class="p-4 px-4 flex">
+          <div class="mt-4 px-4"><img src="{{ asset('uploads/siswa/' . $siswa->url_photo) }}" alt="Admin" class="rounded-circle" width="100"></div>
+          <div class="row p-4">
             <div class="d-flex">
-              <h6 class="mt-2" style="font-weight: bold">Nama Lengkap : {{ $siswa->nama }}</h6>
+              <h6 class="mt-2 fw-semibold">Nama Lengkap : {{ $siswa->nama }}</h6>
             </div>
             <div class="d-flex">
-              <h6 class="mt-2" style="font-weight: bold">NISN : {{ $siswa->nisn }}</h6>
+              <h6 class="mt-2 fw-semibold">NISN : {{ $siswa->nisn }}</h6>
             </div>
             <div class="d-flex">
-              <h6 class="mt-2" style="font-weight: bold">Kelas : {{ $siswa->tingkatan}}  {{ $siswa->jurusan}}  {{ $siswa->kelas}}</h6>
+              <h6 class="mt-2 fw-semibold">Kelas : {{ $siswa->tingkatan}}  {{ $siswa->jurusan}}  {{ $siswa->kelas}}</h6>
             </div>
           </div>
-        <div class="p-3 px-4 flex">
+        <div class="row p-3">
           <div class="d-flex">
-            <h6 class="mt-3" style="font-weight: bold">Asal Sekolah : {{ $siswa->sekolah }}</h6>
+            <h6 class="mt-3 fw-semibold">Asal Sekolah : {{ $siswa->sekolah }}</h6>
             </div>
             <div class="d-flex">
-              <h6 class="mt-2" style="font-weight: bold">Jenis Kelamin : {{ $siswa->gender }}</h6>
+              <h6 class="fw-semibold">Jenis Kelamin : {{ $siswa->gender }}</h6>
+            </div>
+            <div class="d-flex">
+              <h6 class="fw-semibold">Tanggal Pengisian : {{ $date }}</h6>
             </div>
           </div>
-          <div class="d-flex">
-            <h6 class="mt-4 p-2" style="font-weight: bold">Tanggal Pengisian : {{ $date }}</h6>
-          </div>
-          <div class="mt-5 px-5" >
             <form action="{{ route('user.cetakPdf', $siswa->nisn) }}" method="POST">
               @csrf
               <input type="hidden" name="chart_input" id="chart_input">
-              <button type="submit" target="_blank" class="btn btn-danger"><i class="bi bi-printer-fill px-2"></i>Cetak</button>
+              <button style="margin-top: 40px; margin-left:-100px;margin-right:100px" type="submit" target="_blank" class="btn btn-danger"><i class="bi bi-printer-fill px-2"></i>Cetak</button>
             </form>
-          </div>
         </div>
       </div>
-
     </section>
       {{-- End Student Information --}}
       
@@ -77,7 +74,7 @@
 
                         <tr class="fw-bold">
                           <td class="text-center">Keseluruhan ({{ $jml_pertanyaan }})</td>
-                          <td class="text-center">{{ $jml_pertanyaan }}</td>
+                          <td class="text-center">{{ $total_mslh }}</td>
                           <td class="text-center">{{ ($jml_persen). "%" }}</td>
                         </tr>
                 </tbody>
@@ -110,8 +107,8 @@
           <div class="card" style="margin-left: 100px ; margin-right: 100px ; margin-top :40px">
             <h4 class="fw-bold text-primary text-center mt-3">Kesimpulan</h4>
             <p class="p-4">
-              Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa <span class="fw-bold text-danger"> {{$siswa->nama}} </span>memiliki masalah pada Bidang<span class="fw-bold text-danger"> {{$kateg}} </span> yaitu pada
-              masalah nomor <span class="fw-bold text-danger"> {{$masalah}} </span> dengan tingkat persentase masalah sebesar <span class="fw-bold text-success"> {{$p}}% </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk
+              Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa <span class="fw-bold text-danger"> {{$siswa->nama}} </span>memiliki masalah pada Bidang<span class="fw-bold text-danger"> {{$kateg}}.</span>Masalah terbanyak
+              terdapat pada nomor <span class="fw-bold text-danger"> {{$masalah}} </span> dengan tingkat persentase masalah sebesar <span class="fw-bold text-success"> {{$p}}% </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk
               bisa mengonsultasikan permasalahan yang dirasa cukup berat. Bisa menemui Guru Bimbingan Konseling (BK), Psikolog, maupun Orang-orang yang kamu percayai untuk mecurahkan dan mampu membantu mengatasi masalahMu.
               <br><br>
               Bimbingan yang diberikan kepada <span class="fw-bold text-danger"> {{$siswa->nama}} </span> adalah bimbingan pribadi terutama pada bidang untuk mendalami masalah {{$kateg}}.

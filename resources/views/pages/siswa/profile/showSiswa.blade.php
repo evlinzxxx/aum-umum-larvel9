@@ -3,16 +3,19 @@
 <link href="/assets/css/user.css" rel="stylesheet">
 @section('main')
 
+{{-- Start section title data --}}
 <section class="p-0">
     <header>
-        <div class="row gy-4 px-5 mt-2">
+        <div class="row px-5 mt-4">
             <div class="col-lg-6 d-flex flex-column">
               <h3>Profile &raquo; <span class="text-danger"> {{ $siswa->nama }} </span> </h3>
             </div>
         </div>
     </header>
   </section>
+{{-- End section title data --}}
 
+{{-- Start section show profile --}}
   <section id="hero" class="d-flex align-items-center mb-2">
 
     <div class="container">
@@ -44,6 +47,7 @@
                       </div>
                     </div>
                     <hr>
+
                     <div class="row">
                       <div class="col-sm-3">
                         <h6 class="mb-0" style="font-weight: bold">Nama Lengkap</h6>
@@ -53,6 +57,7 @@
                       </div>
                     </div>
                     <hr>
+
                     <div class="row">
                       <div class="col-sm-3">
                         <h6 class="mb-0" style="font-weight: bold">Kelas</h6>
@@ -62,6 +67,7 @@
                       </div>
                     </div>
                     <hr>
+
                     <div class="row">
                       <div class="col-sm-3">
                         <h6 class="mb-0" style="font-weight: bold">Email</h6>
@@ -71,6 +77,7 @@
                       </div>
                     </div>
                     <hr>
+
                     <div class="row">
                       <div class="col-sm-3">
                         <h6 class="mb-0" style="font-weight: bold">Jenis Kelamin</h6>
@@ -80,9 +87,10 @@
                       </div>
                     </div>
                     <hr>
+
                     <div class="row">
                       <div class="col-sm-12">
-                        <a href="{{ route('siswa.home') }}" class="btn btn-outline-info">Back</a>
+                        <a href="{{ route('siswa.home') }}" class="btn btn-outline-info">Kembali</a>
                         <a href="{{ route('user.edit',[$siswa->nisn]) }}" class="btn btn-primary">Edit</a>
                         <a href="{{ route('user.ubahPassword',[$siswa->nisn]) }}" class="btn btn-dark"><i class="bi bi-shield-lock-fill"></i> <span></span> Ubah Password</a>
                       </div>
@@ -95,9 +103,8 @@
             
           </div>
         </div>
-      </div>
-
-  </section><!-- End Hero -->
+  </section>
+  {{-- End section show profile --}}
 
 
     @endsection

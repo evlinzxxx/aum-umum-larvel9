@@ -26,7 +26,7 @@ class SiswaController extends Controller
         $re_kelas = $request->cari_kelas;
 
         if ($re_sekolah != null && $re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
-            $siswas = Siswa::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->paginate(5);
+            $siswas = Siswa::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->paginate(40);
         } elseif ($re_sekolah == null && $re_tingkatan == null && $re_jurusan == null && $re_kelas == null) {
             $siswas = Siswa::paginate(5);
         }
@@ -105,7 +105,7 @@ class SiswaController extends Controller
             'jurusan' => 'required|exists:jurusans,jurusan',
             'kelas' => 'required|exists:kelases,kelas',
             'gender' => '',
-            'email' => 'string|email|max:255',
+            'email' => 'nullable|email|max:255',
             'url_photo' => 'image|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 

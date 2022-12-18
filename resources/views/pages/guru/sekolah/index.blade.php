@@ -2,6 +2,7 @@
 
 @section('content')
 
+{{-- Start section title data --}}
 <section class="p-3">
     <header>
       <h3>Data Sekolah</h3>
@@ -25,12 +26,15 @@
       </div>
     </header>
   </section>
+{{-- End section title data --}}
 
+{{-- Start add data --}}
   <div class="mb-5 ">
   <a href="{{ route('dashboard.sekolah.create') }}" class="btn btn-outline-info"><i class="fa-solid fa-plus"></i> Tambah Data</a>
 </div>
+{{-- End add data --}}
 
-  <div class="data-teacher">
+{{-- Start alert data --}}
 <div class="row">
     <div class="col">
         @if (session('success'))
@@ -45,10 +49,12 @@
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
             </button>
-        @endif
+            @endif
+        </div>
     </div>
-</div>
-
+{{-- Start alert data --}}
+    
+{{-- Start index sekolah --}}
 <div class="card-body">
     <table id="datatables" class="table table-bordered" >
         <thead>
@@ -61,33 +67,29 @@
         <tbody>    
             <tr>
                 <td>{{ $sekolah->sekolah }}</td>
-            <td>
-                {{-- {{ Form::open(['route'=>['product.destroy',$product->id], 'method'=>'delete']) }} --}}
-                <form action="{{ route('dashboard.sekolah.destroy',$sekolah->sekolah) }}" id="delete-form{{ $sekolah->sekolah }}" method="post">
-                    @csrf
+                <td>
+                    <form action="{{ route('dashboard.sekolah.destroy',$sekolah->sekolah) }}" id="delete-form{{ $sekolah->sekolah }}" method="post">
+                        @csrf
                         @method('delete')
-                <div class="btn-group" >
-                <a href="{{ route('dashboard.sekolah.edit',['sekolah'=>$sekolah->sekolah]) }}" class="btn btn-warning">
-                <i class="fas fa-pen"></i>
-                </a>
-                <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin hapus data?')){
-                    event.preventDefault();
-                    document.getElementById('delete-form{{ $sekolah->sekolah }}').submit();
-                }else{
-                    event.preventDefault();
-                }">
-                    <i class="fas fa-trash" ></i>
-                </button>
-                </div>
-            </form>
-                {{-- {{ Form::close() }} --}}
-             </td>
+                        <div class="btn-group" >
+                            <a href="{{ route('dashboard.sekolah.edit',['sekolah'=>$sekolah->sekolah]) }}" class="btn btn-warning">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin hapus data?')){
+                                event.preventDefault();
+                                document.getElementById('delete-form{{ $sekolah->sekolah }}').submit();
+                            }else{
+                                event.preventDefault();}">
+                                <i class="fas fa-trash" ></i>
+                            </button>
+                        </div>
+                    </form>
+                </td>
             </tr>
         </tbody>
-            @endforeach
+        @endforeach
     </table>
 </div>
-</div>
-
+{{-- End index sekolah --}}
 @endsection
 
