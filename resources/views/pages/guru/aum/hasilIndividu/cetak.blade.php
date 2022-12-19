@@ -93,11 +93,11 @@
       <div style="margin-left: 80px; margin-right:80px;border: 0.1px solid;margin-top:25px">
         <h4 align="center" style="color:#1f77d5; margin-bottom:20px">Kesimpulan</h4>
         <div style="font-size: 10px; margin-top:-20px;padding:20px">
-          Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa {{$siswa->nama}} memiliki masalah pada Bidang<span style="font-weight: bold; color:#eb5d1e"> {{$kateg}}.</span>Masalah terbanyak
-          terdapat pada nomor <span style="font-size: 9px">{{$masalah}}</span> dengan tingkat persentase masalah sebesar <span style="font-weight: bold; color:#eb5d1e"> {{$p}}% </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk
+          Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa {{$siswa->nama}} memiliki masalah pada Bidang<span style="font-weight: bold; color:#eb5d1e"> {{$highest_kategori}}.</span>Masalah terbanyak
+          terdapat pada nomor <span style="font-size: 9px">{{$highest_masalah}} </span>  dengan tingkat persentase masalah sebesar <span style="font-weight: bold; color:#ff0000"> {{$highest_percent}}% </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk
           bisa mengonsultasikan permasalahan yang dirasa cukup berat. Bisa menemui Guru Bimbingan Konseling (BK), Psikolog, maupun Orang-orang yang kamu percayai untuk mecurahkan dan mampu membantu mengatasi masalahMu.
           <br><br>
-          Bimbingan yang diberikan kepada {{$siswa->nama}} adalah bimbingan pribadi terutama pada bidang untuk mendalami masalah {{$kateg}}.
+          Bimbingan yang diberikan kepada {{$siswa->nama}} adalah bimbingan pribadi terutama pada bidang untuk mendalami masalah {{$highest_kategori}}.
         </div>
       </div>
       {{-- End Conclusion Inforamtion --}}

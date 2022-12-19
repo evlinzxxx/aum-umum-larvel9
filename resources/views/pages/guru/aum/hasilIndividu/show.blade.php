@@ -121,11 +121,11 @@
     <div class="card" style="margin-left: 100px ; margin-right: 100px ; margin-top :40px">
       <h4 class="fw-bold text-primary text-center mt-3">Kesimpulan</h4>
       <p class="p-4">
-        Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa <span class="fw-bold text-danger"> {{$siswa->nama}} </span>memiliki masalah pada Bidang<span class="fw-bold text-danger"> {{$kateg}}.</span> Masalah terbanyak
-        terdapat pada nomor <span class="fw-bold text-danger"> {{$masalah}} </span> dengan tingkat persentase masalah sebesar <span class="fw-bold text-success"> {{$p}}% </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk
+        Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa <span class="fw-bold text-danger"> {{$siswa->nama}} </span>memiliki masalah pada Bidang<span class="fw-bold text-danger"> {{$highest_kategori}}.</span> Masalah terbanyak
+        terdapat pada nomor <span class="fw-bold text-danger"> {{$highest_masalah}} </span> dengan tingkat persentase masalah sebesar <span class="fw-bold text-success"> {{$highest_percent}}% </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk
         bisa mengonsultasikan permasalahan yang dirasa cukup berat. Bisa menemui Guru Bimbingan Konseling (BK), Psikolog, maupun Orang-orang yang kamu percayai untuk mecurahkan dan mampu membantu mengatasi masalahMu.
         <br><br>
-          Bimbingan yang diberikan kepada <span class="fw-bold text-danger"> {{$siswa->nama}} </span> adalah bimbingan pribadi terutama pada bidang untuk mendalami masalah {{$kateg}}.
+          Bimbingan yang diberikan kepada <span class="fw-bold text-danger"> {{$siswa->nama}} </span> adalah bimbingan pribadi terutama pada bidang untuk mendalami masalah {{$highest_kategori}}.
         </p>
       </div>
     {{-- End Conclusian Information  --}}

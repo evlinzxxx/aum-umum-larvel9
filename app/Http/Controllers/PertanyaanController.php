@@ -16,11 +16,15 @@ class PertanyaanController extends Controller
      */
     public function index(Request $request)
     {
+        //request data cari pertanyaan berdasrkan kategori
         $re_kategori = $request->cari_kategori;
 
+        //jika hasil request tidak kosong
         if ($re_kategori != null) {
             $pertanyaans = Pertanyaan::where('kode_kategori', $re_kategori)->paginate(50);
-        } elseif ($re_kategori == null ) {
+        } 
+        //jika hasil request kosong
+        elseif ($re_kategori == null ) {
             $pertanyaans = Pertanyaan::paginate(10);
         }
 
@@ -35,7 +39,7 @@ class PertanyaanController extends Controller
      */
     public function create()
     {
-        
+        //menampilkan form tambah pertanyaan
         $kategoris = KategoriMasalah::all()->sortBy('created_at');
         return view('pages.guru.aum.pertanyaan.create', compact(['kategoris']));
     }
@@ -48,8 +52,10 @@ class PertanyaanController extends Controller
      */
     public function store(PertanyaanRequest $request)
     {
+         //ambil request data pertanyaan
         $pertanyaan = $request->all();
 
+         //simpan data pertanyaan
         $pertanyaans = Pertanyaan::create($pertanyaan);
 
         if ($pertanyaans) {
@@ -60,16 +66,6 @@ class PertanyaanController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -77,6 +73,7 @@ class PertanyaanController extends Controller
      */
     public function edit($kode_pertanyaan)
     {
+        //menampilkan data pertanyaan yang akan diedit
         $kategoris = KategoriMasalah::all();
         $pertanyaans = Pertanyaan::findOrFail($kode_pertanyaan);
         return view('pages.guru.aum.pertanyaan.edit', compact(['kategoris', 'pertanyaans']));
@@ -91,19 +88,22 @@ class PertanyaanController extends Controller
      */
     public function update(Request $request, Pertanyaan $pertanyaan)
     {
+         //ambil request data pertanyaan
         $data = $request->all();
 
+        //jika belum memilik kategori
         if(($request->kode_kategori)==null){
             return back()->with('errror', 'Pilih Kategori terlebih dulu!');
         }
 
+        //validasi data 
         $request->validate([
             'kode_kategori' => ['exists:kategori_masalahs,kode_kategori'],
             'kode_pertanyaan' => ['required', 'string', 'max:3'],
             'pertanyaan' => ['required', 'string'],
         ]);
 
-
+        //update data pertanyaan
         $pertanyaans = $pertanyaan->update($data);
 
         if ($pertanyaans) {
@@ -121,8 +121,7 @@ class PertanyaanController extends Controller
      */
     public function destroy(Pertanyaan $pertanyaan)
     {
-
-        
+        //hapus data pertanyaan
         $pertanyaans = $pertanyaan->delete();
 
         if ($pertanyaans) {

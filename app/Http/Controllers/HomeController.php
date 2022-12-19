@@ -6,7 +6,6 @@ use App\Models\HasilIndividu;
 use App\Models\LembarJawaban;
 use App\Models\Pertanyaan;
 use App\Models\Siswa;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -28,6 +27,7 @@ class HomeController extends Controller
      */
     public function index(Siswa $siswa)
     {
+        //data siswa yang login
         $siswa_nisn = Auth::user()->nisn;
         $siswa = Siswa::find($siswa_nisn);
 

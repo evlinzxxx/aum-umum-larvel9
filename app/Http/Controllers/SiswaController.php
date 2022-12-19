@@ -20,14 +20,18 @@ class SiswaController extends Controller
      */
     public function index(Request $request)
     {
+        //request data cari siswa berdasrkan nama sekolah,tingkatan,jurusan,dan kelas
         $re_sekolah = $request->cari_sekolah;
         $re_tingkatan = $request->cari_tingkatan;
         $re_jurusan = $request->cari_jurusan;
         $re_kelas = $request->cari_kelas;
 
+        //jika hasil request tidak kosong
         if ($re_sekolah != null && $re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
             $siswas = Siswa::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->paginate(40);
-        } elseif ($re_sekolah == null && $re_tingkatan == null && $re_jurusan == null && $re_kelas == null) {
+        } 
+        //jika hasil request kosong
+        elseif ($re_sekolah == null && $re_tingkatan == null && $re_jurusan == null && $re_kelas == null) {
             $siswas = Siswa::paginate(5);
         }
 
@@ -40,27 +44,6 @@ class SiswaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -68,6 +51,7 @@ class SiswaController extends Controller
      */
     public function show($nisn)
     {
+        //menampilkan profil data siswa
         $siswa = Siswa::findOrFail($nisn);
         return view('pages.guru.profile.showSiswa', compact(['siswa']));
     }
@@ -80,6 +64,7 @@ class SiswaController extends Controller
      */
     public function edit(Siswa $siswa)
     {
+        //menampilkan data siswa untuk diedit
         $sekolahs = Sekolah::all();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
@@ -96,8 +81,10 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
+        //reuest semua data yang akan diupdate
         $inputs = $request->all();
 
+        //validasi data
         $request->validate([
             'sekolah' => 'required|exists:sekolahs,sekolah',
             'nama' => 'required|string|max:255',
@@ -109,10 +96,13 @@ class SiswaController extends Controller
             'url_photo' => 'image|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 
+        //menyimpan dan mengupdate foto
         if ($image = $request->file('url_photo')) {
 
-            //delete the old
-            if (!empty($siswa->url_photo) && file_exists('uploads/siswa/' . $siswa->url_photo)) {
+            if (($siswa->url_photo) == "default_user.png") {
+            }
+            //hapus foto lama dari folder
+            elseif (!empty($siswa->url_photo) && file_exists('uploads/siswa/' . $siswa->url_photo)) {
                 unlink('uploads/siswa/' . $siswa->url_photo);
             }
             $imageName = $inputs['nama'] . time() . '.' . $image->getClientOriginalExtension();
@@ -120,7 +110,7 @@ class SiswaController extends Controller
             $inputs['url_photo'] = $imageName;
         }
 
-
+        //update data
         $siswa = $siswa->update($inputs);
 
         if ($siswa) {
@@ -132,6 +122,7 @@ class SiswaController extends Controller
 
     public function showSiswa($nisn)
     {
+        //menampilkan profile di halaman siswa
         $siswa = Siswa::findOrFail($nisn);
         return view('pages.siswa.profile.showSiswa', compact(['siswa']));
     }
@@ -144,6 +135,7 @@ class SiswaController extends Controller
      */
     public function editSiswa($nisn)
     {
+        //menampilkan data siswa untuk diedit di halaman siswa
         $sekolahs = Sekolah::all();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
@@ -161,8 +153,10 @@ class SiswaController extends Controller
      */
     public function updateSiswa(Request $request, Siswa $user)
     {
+        //reuest semua data yang akan diupdate
         $inputs = $request->all();
 
+        //validasi data
         $request->validate([
             'sekolah' => 'required|exists:sekolahs,sekolah',
             'nama' => 'required|string|max:255',
@@ -174,10 +168,13 @@ class SiswaController extends Controller
             'url_photo' => 'image|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 
+        //menyimpan dan mengupdate foto
         if ($image = $request->file('url_photo')) {
 
-            //delete the old
-            if (!empty($user->url_photo) && file_exists('uploads/siswa/' . $user->url_photo)) {
+            if (($user->url_photo) == "default_user.png") {
+            }
+            //hapus foto lama dari folder
+            elseif (!empty($user->url_photo) && file_exists('uploads/siswa/' . $user->url_photo)) {
                 unlink('uploads/siswa/' . $user->url_photo);
             }
             $imageName = $inputs['nama'] . time() . '.' . $image->getClientOriginalExtension();
@@ -185,7 +182,7 @@ class SiswaController extends Controller
             $inputs['url_photo'] = $imageName;
         }
 
-
+        //update data
         $users = $user->update($inputs);
 
         if ($users) {
@@ -203,7 +200,10 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $siswa)
     {
-        if (!empty($siswa->url_photo) && file_exists('uploads/siswa/' . $siswa->url_photo)) {
+        //hapus data siswa dan foto di folder
+        if (($siswa->url_photo) == "default_user.png") {
+            $siswa = $siswa->delete();
+        } elseif (!empty($siswa->url_photo) && file_exists('uploads/siswa/' . $siswa->url_photo)) {
             unlink('uploads/siswa/' . $siswa->url_photo);
             $siswa = $siswa->delete();
         }
@@ -213,11 +213,12 @@ class SiswaController extends Controller
             return redirect()->route('dashboard.siswa.index')->with('failed', 'Hapus data gagal!');
         }
     }
-    
+
     public function hapusTest($nisn)
     {
-        $data_jawaban = LembarJawaban::where('nisn',$nisn)->get();
-        $data_analisis = HasilIndividu::where('nisn',$nisn)->get();
+        //hapus semua data jawaban dan analisis individu untuk memulai ulang tes
+        $data_jawaban = LembarJawaban::where('nisn', $nisn)->get();
+        $data_analisis = HasilIndividu::where('nisn', $nisn)->get();
 
         $data1 = $data_jawaban->each->delete();
         $data2 = $data_analisis->each->delete();

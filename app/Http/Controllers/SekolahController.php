@@ -14,6 +14,7 @@ class SekolahController extends Controller
      */
     public function index()
     {
+        //menampilkan index data sekolah
         $sekolahs = Sekolah::all();
         return view('pages.guru.sekolah.index', compact(['sekolahs']));
     }
@@ -25,6 +26,7 @@ class SekolahController extends Controller
      */
     public function create()
     {
+        //menampilkan form tambah sekolah
         return view('pages.guru.sekolah.create');
     }
 
@@ -36,8 +38,10 @@ class SekolahController extends Controller
      */
     public function store(SekolahRequest $request)
     {
+        //ambil request data sekolah
         $sekolah = $request->all();
 
+        //simpan data sekolah
         $sekolah = Sekolah::create($sekolah);
 
         if ($sekolah) {
@@ -48,16 +52,6 @@ class SekolahController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -65,6 +59,7 @@ class SekolahController extends Controller
      */
     public function edit(Sekolah $sekolah)
     {
+        //menampilkan data sekolah yang akan diedit
         return view('pages.guru.sekolah.edit', compact(['sekolah']));
     }
 
@@ -77,8 +72,10 @@ class SekolahController extends Controller
      */
     public function update(SekolahRequest $request, Sekolah $sekolah)
     {
+        //ambil request data sekolah
         $data = $request->all();
 
+        //update data sekolah
         $sekolah = $sekolah->update($data);
 
         if ($sekolah) {
@@ -96,6 +93,7 @@ class SekolahController extends Controller
      */
     public function destroy(Sekolah $sekolah)
     {
+        //hapus data sekolah
         $sekolah = $sekolah->delete();
 
         if ($sekolah) {

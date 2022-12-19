@@ -15,6 +15,7 @@ class KelasController extends Controller
      */
     public function index()
     {
+        //menampilkan index data kelas
         $kelass = Kelas::all();
 
         return view('pages.guru.sekolah.kelas.index', compact(['kelass']));
@@ -27,6 +28,7 @@ class KelasController extends Controller
      */
     public function create()
     {
+        //menampilkan form tambah kelas
         return view('pages.guru.sekolah.kelas.create');
     }
 
@@ -38,8 +40,10 @@ class KelasController extends Controller
      */
     public function store(KelasRequest $request)
     {
+        //ambil request data kelas
         $kelas = $request->all();
 
+        //simpan data kelas
         $kelases = Kelas::create($kelas);
 
         if ($kelases) {
@@ -50,17 +54,6 @@ class KelasController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -68,6 +61,7 @@ class KelasController extends Controller
      */
     public function edit($kelas)
     {
+        //menampilkan data kelas yang akan diedit
         return view('pages.guru.sekolah.kelas.edit', compact(['kelas']));
     }
 
@@ -78,12 +72,15 @@ class KelasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$kelas)
+    public function update(Request $request, $kelas)
     {
+        //ambil request data kelas
         $data = $request->all();
 
-        $data_kelas = Kelas::where('kelas',$kelas)->first();
-        
+        //ambil data yang akan diupdate
+        $data_kelas = Kelas::where('kelas', $kelas)->first();
+
+        //update data kelas
         $kelas = $data_kelas->update($data);
 
         if ($kelas) {
@@ -101,8 +98,10 @@ class KelasController extends Controller
      */
     public function destroy($kelas)
     {
-        $data_kelas = Kelas::where('kelas',$kelas)->first();
-        
+        //ambil data yang akan dihapus
+        $data_kelas = Kelas::where('kelas', $kelas)->first();
+
+        //hapus data kelas
         $kelas = $data_kelas->delete();
 
         if ($kelas) {

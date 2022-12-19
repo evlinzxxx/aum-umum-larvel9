@@ -58,7 +58,6 @@
         <span style="font-weight: bold">Informasi Jawaban</span>
       </button>
     </h2>
-    <hr>
     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
         <p class="fw-bold text-success"><i class="bi bi-check-square-fill px-2"></i>Jumlah yang sudah dijawab : {{ $total }}</p>
@@ -69,6 +68,7 @@
     </div>
   </div>
 </div>
+<hr>
 @endisset
 {{-- End answer --}}
   

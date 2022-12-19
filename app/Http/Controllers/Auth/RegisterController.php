@@ -17,16 +17,6 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     use RegistersUsers;
 
@@ -73,6 +63,7 @@ class RegisterController extends Controller
 
     public function showSiswaRegisterForm()
     {
+        //tampilkan data sekolah,tingkatan,jurusan,dan kelas
         $sekolahs = Sekolah::all();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
@@ -87,6 +78,7 @@ class RegisterController extends Controller
 
     protected function createSiswa(SiswaRequest $request, Siswa $siswa)
     {
+        //simpan data register siswa
         $siswas = $siswa->create([
             'sekolah' => $request->sekolah,
             'nisn' => $request->nisn,
@@ -109,12 +101,14 @@ class RegisterController extends Controller
 
     public function showGuruRegisterForm()
     {
+        //tampilkan data sekolah
         $sekolahs = Sekolah::all();
         return view('Auth.registerGuru', compact(['sekolahs']), ['route' => route('guru.register-view'), 'title' => 'Registrasi Guru BK']);
     }
 
     protected function createGuru(GuruRequest $request, Guru $guru)
     {
+        //simpan data register guru
         $guru = $guru->create([
             'sekolah' => $request->sekolah,
             'nip' => $request->nip,

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HasilIndividu;
-use App\Models\KategoriMasalah;
 use App\Models\LembarJawaban;
 use App\Models\Pertanyaan;
 use App\Models\Siswa;
@@ -15,28 +13,34 @@ class LembarJawabanController extends Controller
 {
     public function start(Pertanyaan $pertanyaans)
     {
+        //ambil data siswa yang sedang login
         $siswa_nisn = Auth::user()->nisn;
         $siswa = Siswa::find($siswa_nisn);
+
+        //Jika profil belum lengkap
         if(($siswa->gender)==null){
             return back()->with('failed','Lengkapi Data Diri Dahulu!');
         }
-        $pertanyaans = Pertanyaan::paginate(5);
-        $pertanyaan = Pertanyaan::all();
-        $date = date('d M Y');
 
+        //ambil data pertanyaan
+        $pertanyaans = Pertanyaan::paginate(5);
+        //tanggal pengisian
+        $date = date('d M Y');
+        //ambil data jawaban yang sudah disimpan
         $jawaban = LembarJawaban::where('nisn', $siswa_nisn)->get();
 
+        //hitung total jawaban yang sudah dijawab
         $total = count($jawaban);
 
         Session::put('pertanyaan_url', request()->fullUrl());
 
-        return view('pages.siswa.lembarJawaban.index', compact(['pertanyaans','pertanyaan', 'siswa', 'date', 'jawaban', 'total']));
+        return view('pages.siswa.lembarJawaban.index', compact(['pertanyaans', 'siswa', 'date', 'jawaban', 'total']));
     }
 
 
     public function assign(Request $request)
     {
-
+        //validasi data jawaban
         $request->validate([
             'sekolah' => 'required',
             'nisn' => 'required',
@@ -50,21 +54,26 @@ class LembarJawabanController extends Controller
             'jawaban.required' => 'Pilih jawaban terlebih dahulu!',
         ]);
 
+        //ambil kode pertanyaan
         $id = $request->input('kode_pertanyaan');
         $siswa = Auth::user()->nisn;
 
+        //request data yang akan disimpam
         $kode_pertanyaan = $request->kode_pertanyaan;
-
         $jawaban = $request->jawaban;
 
-        $ck = count($kode_pertanyaan);
-        $cj = count($jawaban);
-        if($ck!=$cj){
+        //hitung nilai jawaban 
+        $hp = count($kode_pertanyaan);
+        $hj = count($jawaban);
+        //jika jawaban belum dipilih
+        if($hp!=$hj){
             return back()->with('failed', 'Pilih Jawaban Terlebih dahulu!');
         }
-              
+        
+        //cek jika sudah ada jawaban
         $a = LembarJawaban::where('nisn', $siswa)->where('kode_pertanyaan', '=', $id)->get()->count();
         
+        //jika belum ada, simpan data jawaban
         if ($a < 1) {
             foreach($kode_pertanyaan as $k){
             $jawab = LembarJawaban::create([
@@ -78,7 +87,9 @@ class LembarJawabanController extends Controller
                 'jawaban' => $jawaban[$k],
             ]);
             }
-        } elseif ($a == 1) {
+        }
+        //jika sudah ada, update data jawaban 
+        elseif ($a == 1) {
             foreach($kode_pertanyaan as $k){
             $jawab = LembarJawaban::where('kode_pertanyaan', '=', $k)
             ->update([
@@ -96,14 +107,17 @@ class LembarJawabanController extends Controller
 
     public function end()
     {
+        //cek total jawab yang sudah dijawab
         $siswa_nisn = Auth::user()->nisn;
         $total = LembarJawaban::where('nisn', $siswa_nisn)->get()->count();
         $pertanyaan = Pertanyaan::all()->count();
 
-
+        //jika semua pertanyaan dijawab
         if ($total == $pertanyaan) {
             return redirect()->route('user.hitung');
-        } else {
+        } 
+        //jika ada pertanyaan yang belum dijawab
+        else {
             return back()->with('failed', 'Anda belum mengisi semua pertanyaan');
         }
     }

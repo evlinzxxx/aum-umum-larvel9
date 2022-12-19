@@ -15,6 +15,7 @@ class JurusanController extends Controller
      */
     public function index()
     {
+        //menampilkan index data jurusan
         $jurusans = Jurusan::all();
 
         return view('pages.guru.sekolah.jurusan.index', compact((['jurusans'])));
@@ -27,6 +28,7 @@ class JurusanController extends Controller
      */
     public function create()
     {
+        //menampilkan form tambah jurusan
         return view('pages.guru.sekolah.jurusan.create');
     }
 
@@ -38,8 +40,10 @@ class JurusanController extends Controller
      */
     public function store(JurusanRequest $request)
     {
+         //ambil request data jurusan
         $jurusan = $request->all();
 
+        //simpan data jurusan
         $jurusan = Jurusan::create($jurusan);
 
         if ($jurusan) {
@@ -50,17 +54,6 @@ class JurusanController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -68,6 +61,7 @@ class JurusanController extends Controller
      */
     public function edit(Jurusan $jurusan)
     {
+        //menampilkan data jurusan yang akan diedit
         return view('pages.guru.sekolah.jurusan.edit', compact(['jurusan']));
     }
 
@@ -80,8 +74,10 @@ class JurusanController extends Controller
      */
     public function update(JurusanRequest $request, Jurusan $jurusan)
     {
+        //ambil request data jurusan
         $data = $request->all();
         
+        //update data jurusan
         $jurusan = $jurusan->update($data);
 
         if ($jurusan) {
@@ -99,6 +95,7 @@ class JurusanController extends Controller
      */
     public function destroy(Jurusan $jurusan)
     {
+        //hapus data jurusan
         $jurusan = $jurusan->delete();
 
         if ($jurusan) {

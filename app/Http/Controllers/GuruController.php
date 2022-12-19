@@ -16,11 +16,13 @@ class GuruController extends Controller
 
     public function index(Request $request)
     {
+        //request data cari guru berdasrkan nama sekolah
         $re_sekolah = $request->cari_sekolah;
 
+        //tampilkan data guru
         if ($re_sekolah != null) {
             $gurus = Guru::where('sekolah', $re_sekolah)->paginate(5);
-        } elseif ($re_sekolah == null ) {
+        } elseif ($re_sekolah == null) {
             $gurus = Guru::paginate(5);
         }
 
@@ -39,6 +41,7 @@ class GuruController extends Controller
      */
     public function show($nip)
     {
+        //menampilkan profil data guru
         $guru = Guru::findOrFail($nip);
         return view('pages.guru.profile.show', compact(['guru']));
     }
@@ -52,6 +55,7 @@ class GuruController extends Controller
      */
     public function edit(Guru $guru)
     {
+        //menampilkan data guru untuk diedit
         $sekolahs = Sekolah::all();
         return view('pages.guru.profile.edit', compact(['guru', 'sekolahs']));
     }
@@ -65,9 +69,10 @@ class GuruController extends Controller
      */
     public function update(Request $request,  Guru $guru)
     {
-
+        //reuest semua data yang akan diupdate
         $inputs = $request->all();
 
+        //validasi data
         $request->validate([
             'sekolah' => 'required|exists:sekolahs,sekolah',
             'nama' => 'required|string|max:255',
@@ -76,10 +81,13 @@ class GuruController extends Controller
             'url_photo' => 'image|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 
+        //menyimpan dan mengupdate foto
         if ($image = $request->file('url_photo')) {
 
-            //delete the old
-            if (!empty($guru->url_photo) && file_exists('uploads/guru/' . $guru->url_photo)) {
+            if (($guru->url_photo) == "default_user.png") {
+            } 
+            //hapus foto lama dari folder
+            elseif (!empty($guru->url_photo) && file_exists('uploads/guru/' . $guru->url_photo)) {
                 unlink('uploads/guru/' . $guru->url_photo);
             }
             $imageName = $inputs['nama'] . time() . '.' . $image->getClientOriginalExtension();
@@ -87,7 +95,7 @@ class GuruController extends Controller
             $inputs['url_photo'] = $imageName;
         }
 
-
+        //update data guru baru yang sudah diedit
         $guru = $guru->update($inputs);
 
         if ($guru) {
@@ -105,8 +113,14 @@ class GuruController extends Controller
      */
     public function destroy(Guru $guru)
     {
-        if (!empty($guru->url_photo) && file_exists('uploads/guru/' . $guru->url_photo)) {
+        //hapus data guru
+        if (($guru->url_photo) == "default_user.png") {
+            $guru = $guru->delete();
+
+            //hapus data guru dan foto lama dari folder
+        } elseif (!empty($guru->url_photo) && file_exists('uploads/guru/' . $guru->url_photo)) {
             unlink('uploads/guru/' . $guru->url_photo);
+
             $guru = $guru->delete();
         }
         if ($guru) {

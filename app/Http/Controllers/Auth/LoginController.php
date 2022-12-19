@@ -10,17 +10,6 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
@@ -48,15 +37,18 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        //ambil reuest nisn/nip
         $tampung = $request->number;
         $password = $request->password;
         $hitung = strlen($tampung);
 
+        //10 untuk nisn(siswa)
         if ($hitung == 10) {
             $nisn = $request->number;
             if (Auth::guard('user')->attempt(['nisn' => $nisn, 'password' => $password], $request->get('remember'))) {
                 return redirect()->intended('/siswa/home');
             }
+        //18 untuk nip(guru)
         } elseif ($hitung == 18) {
             $nip = $request->number;
             if (Auth::guard('guru')->attempt(['nip' => $nip, 'password' => $password], $request->get('remember'))) {

@@ -15,6 +15,7 @@ class TingkatanController extends Controller
      */
     public function index()
     {
+        //menampilkan index data tingkatan
         $tingkatans = Tingkatan::all();
 
         return view('pages.guru.sekolah.tingkatan.index', compact(['tingkatans']));
@@ -27,6 +28,7 @@ class TingkatanController extends Controller
      */
     public function create()
     {
+        //menampilkan form tambah tingkatan
         return view('pages.guru.sekolah.tingkatan.create');
     }
 
@@ -38,8 +40,10 @@ class TingkatanController extends Controller
      */
     public function store(TingkatanRequest $request, Tingkatan $tingkatan)
     {
+         //ambil request data tingkatan
         $tingkatan = $request->all();
 
+        //simpan data tingkatan
         $tingkatan = Tingkatan::create($tingkatan);
 
         if ($tingkatan) {
@@ -49,16 +53,6 @@ class TingkatanController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -68,6 +62,7 @@ class TingkatanController extends Controller
      */
     public function edit(Tingkatan $tingkatan)
     {
+         //menampilkan data tingkatan yang akan diedit
         return view('pages.guru.sekolah.tingkatan.edit', compact(['tingkatan']));
     }
 
@@ -80,8 +75,10 @@ class TingkatanController extends Controller
      */
     public function update(TingkatanRequest $request, Tingkatan $tingkatan)
     {
+        //ambil request data tingkatan
         $data = $request->all();
 
+        //update data tingkatan
         $tingkatan = $tingkatan->update($data);
 
         if ($tingkatan) {
@@ -89,7 +86,6 @@ class TingkatanController extends Controller
         } else {
             return redirect()->route('dashboard.tingkatan.index')->with('failed', 'Update data gagal!');
         }
-
     }
 
     /**
@@ -100,7 +96,8 @@ class TingkatanController extends Controller
      */
     public function destroy(Tingkatan $tingkatan)
     {
-        $tingkatan= $tingkatan->delete();
+        //hapus data tingkatan
+        $tingkatan = $tingkatan->delete();
 
         if ($tingkatan) {
             return redirect()->route('dashboard.tingkatan.index')->with('success', 'Delete data sukses!');

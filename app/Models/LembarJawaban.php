@@ -59,8 +59,5 @@ class LembarJawaban extends Model
         return $this->belongsTo(Kelas::class, 'kelas', 'kelas');
     }
 
-    // public function hasilIndividu()
-    // {
-    //     return $this->hasMany(LembarJawaban::class, 'id_jawaban', 'id_jawaban');
-    // }
+ 
 }

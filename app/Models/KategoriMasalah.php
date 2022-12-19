@@ -18,11 +18,6 @@ class KategoriMasalah extends Model
         'kode_kategori', 'nama_kategori'
     ];
 
-    public function pertanyaann()
-    {
-        return $this->hasMany(Pertanyaan::class, 'kode_pertanyaan', 'kode_pertanyaan');
-    }
-
     public function jawaban()
     {
         return $this->hasMany(KategoriMasalah::class, 'kode_kategori', 'kode_kategori');

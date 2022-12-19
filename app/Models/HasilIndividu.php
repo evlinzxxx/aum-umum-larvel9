@@ -23,7 +23,7 @@ class HasilIndividu extends Model
 
     public function siswa()
     {
-        return $this->hasMany(Siswa::class);
+        return $this->hasMany(Siswa::class,  'nisn', 'nisn');
     }
 
     public function sekolah()

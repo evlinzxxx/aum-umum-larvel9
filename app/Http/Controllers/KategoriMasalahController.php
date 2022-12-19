@@ -15,6 +15,7 @@ class KategoriMasalahController extends Controller
      */
     public function index()
     {
+        //menampilkan index data kategori
         $kategoris = KategoriMasalah::all()->sortBy('created_at');
 
         return view('pages.guru.aum.kategori.index', compact((['kategoris'])));
@@ -27,6 +28,7 @@ class KategoriMasalahController extends Controller
      */
     public function create()
     {
+        //menampilkan form tambah kategori
         return view('pages.guru.aum.kategori.create');
     }
 
@@ -38,8 +40,10 @@ class KategoriMasalahController extends Controller
      */
     public function store(KategoriMasalahRequest $request)
     {
+        //ambil request data kategori
         $kategoris = $request->all();
 
+        //simpan data kategori
         $kategori = KategoriMasalah::create($kategoris);
 
         if ($kategori) {
@@ -49,16 +53,6 @@ class KategoriMasalahController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -68,6 +62,7 @@ class KategoriMasalahController extends Controller
      */
     public function edit(KategoriMasalah $kategori)
     {
+        //menampilkan form edit kategori
         return view('pages.guru.aum.kategori.edit', compact(['kategori']));
     }
 
@@ -80,8 +75,10 @@ class KategoriMasalahController extends Controller
      */
     public function update(KategoriMasalah $kategori, KategoriMasalahRequest $request)
     {
+        //ambil request data kategori
         $data = $request->all();
 
+        //update data kategori
         $kategoris = $kategori->update($data);
 
         if ($kategoris) {
@@ -99,6 +96,7 @@ class KategoriMasalahController extends Controller
      */
     public function destroy(KategoriMasalah $kategori)
     {
+        //hapus data kategori
         $kategoris = $kategori->delete();
 
         if ($kategoris) {
