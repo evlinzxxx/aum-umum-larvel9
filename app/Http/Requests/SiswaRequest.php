@@ -25,7 +25,7 @@ class SiswaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nisn' => ['required', 'string','min:10' ,'max:10', 'unique:siswas'],
+            'nisn' => ['required', 'numeric','min:10' ,'max:10', 'unique:siswas'],
             'sekolah' => ['required', 'exists:sekolahs,sekolah'],
             'nama' => ['required', 'string', 'max:255'],
             'tingkatan' => ['required', 'exists:tingkatans,tingkatan'],
