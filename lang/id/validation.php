@@ -88,10 +88,10 @@ return [
     'max' => [
         'array' => 'The :attribute must not have more than :max items.',
         'file' => 'The :attribute must not be greater than :max kilobytes.',
-        'numeric' => 'The :attribute must not be greater than :max.',
+        'numeric' => ':Attribute tidak boleh lebih dari :max karakter.',
         'string' => ':Attribute tidak boleh lebih dari :max karakter.',
     ],
-    'max_digits' => 'The :attribute must not have more than :max digits.',
+    'max_digits' => ':Attribute tidak boleh lebih dari :max karakter.',
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
@@ -100,7 +100,7 @@ return [
         'numeric' => 'The :attribute must be at least :min.',
         'string' => ':Attribute tidak boleh kurang dari :min karakter.',
     ],
-    'min_digits' => 'The :attribute must have at least :min digits.',
+    'min_digits' => ':Attribute tidak boleh kurang dari :min karakter.',
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',

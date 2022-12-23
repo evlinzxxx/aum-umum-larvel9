@@ -25,7 +25,7 @@ class SiswaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nisn' => ['required', 'numeric','min:10' ,'max:10', 'unique:siswas'],
+            'nisn' => ['required', 'numeric','min_digits:10' ,'max_digits:10', 'unique:siswas'],
             'sekolah' => ['required', 'exists:sekolahs,sekolah'],
             'nama' => ['required', 'string', 'max:255'],
             'tingkatan' => ['required', 'exists:tingkatans,tingkatan'],
@@ -37,4 +37,4 @@ class SiswaRequest extends FormRequest
             'url_photo' => ['image', 'mimes:pdf,jpeg,png,jpg', 'max:2048'],
         ];
     }
-}
+}   

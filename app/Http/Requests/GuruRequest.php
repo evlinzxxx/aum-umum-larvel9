@@ -26,7 +26,7 @@ class GuruRequest extends FormRequest
     {
         return [
             'sekolah' => ['required', 'exists:sekolahs,sekolah'],
-            'nip' => ['required', 'numeric','min:18', 'max:18', 'unique:gurus'],
+            'nip' => ['required', 'min_digits:18', 'max_digits:18','numeric', 'unique:gurus'],
             'nama' => ['required', 'string', 'max:255'],
             'gender' => ['enum', 'in:Laki-laki,Perempuan'],
             'email' => ['email', 'max:255', 'unique:gurus'],

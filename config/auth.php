@@ -87,6 +87,11 @@ return [
             'model' => App\Models\Guru::class,
         ],
 
+        // 'admins' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\Admin::class,
+        // ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
