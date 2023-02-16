@@ -1,0 +1,8 @@
+Cara menginstall AUM Umum SMA 
+1. Simpan folder project ini di tempat Xampp atau Laragon kalian berada
+2. Buat database sesuai dengan db_database yang ada di folder .env, sesuaikan db_username dan db_password nya dengan phpmyadmin kalian
+3. Ketik composer install di terminal
+4. Ketik php artisan migrate di terminal
+5. Ketik php artisan db:seed di terminal
+6. Import database pertanyaans.sql dan kategori_masalahs.sql ke database di phpmyadmin
+7. Ketik php artisan serve di terminal untuk memulai menggunakan aplikasi ini.
