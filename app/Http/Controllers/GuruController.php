@@ -28,7 +28,7 @@ class GuruController extends Controller
 
         $sekolahs = Sekolah::all();
 
-        return view('pages.guru.profile.index', compact(['gurus', 'sekolahs', 'request']));
+        return view('pages.admin.profile.index', compact(['gurus', 'sekolahs', 'request']));
     }
 
 
@@ -40,6 +40,12 @@ class GuruController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($nip)
+    {
+        //menampilkan profil data guru
+        $guru = Guru::findOrFail($nip);
+        return view('pages.admin.profile.show', compact(['guru']));
+    }
+    public function showGuru($nip)
     {
         //menampilkan profil data guru
         $guru = Guru::findOrFail($nip);
@@ -57,7 +63,7 @@ class GuruController extends Controller
     {
         //menampilkan data guru untuk diedit
         $sekolahs = Sekolah::all();
-        return view('pages.guru.profile.edit', compact(['guru', 'sekolahs']));
+        return view('pages.admin.profile.edit', compact(['guru', 'sekolahs']));
     }
 
     /**

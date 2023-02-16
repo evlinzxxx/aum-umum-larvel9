@@ -18,7 +18,7 @@ class TingkatanController extends Controller
         //menampilkan index data tingkatan
         $tingkatans = Tingkatan::all();
 
-        return view('pages.guru.sekolah.tingkatan.index', compact(['tingkatans']));
+        return view('pages.admin.sekolah.tingkatan.index', compact(['tingkatans']));
     }
 
     /**
@@ -29,7 +29,7 @@ class TingkatanController extends Controller
     public function create()
     {
         //menampilkan form tambah tingkatan
-        return view('pages.guru.sekolah.tingkatan.create');
+        return view('pages.admin.sekolah.tingkatan.create');
     }
 
     /**
@@ -63,7 +63,7 @@ class TingkatanController extends Controller
     public function edit(Tingkatan $tingkatan)
     {
          //menampilkan data tingkatan yang akan diedit
-        return view('pages.guru.sekolah.tingkatan.edit', compact(['tingkatan']));
+        return view('pages.admin.sekolah.tingkatan.edit', compact(['tingkatan']));
     }
 
     /**

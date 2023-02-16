@@ -21,22 +21,23 @@ class HasilIndividuController extends Controller
 {
     public function index(Request $request)
     {
+        $sklh = auth()->user()->sekolah;
+
         //request data cari hasil individu berdasrkan sekolah,tingkatan,jurusan,dan kelas
-        $re_sekolah = $request->cari_sekolah;
         $re_tingkatan = $request->cari_tingkatan;
         $re_jurusan = $request->cari_jurusan;
         $re_kelas = $request->cari_kelas;
 
         //jika hasil request tidak kosong
-        if ($re_sekolah != null && $re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
-            $siswas = Siswa::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->paginate(40);
+        if ($re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
+            $siswas = Siswa::where('sekolah', $sklh)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->paginate(40);
         }
         //jika hasil request kosong
-        elseif ($re_sekolah == null && $re_tingkatan == null && $re_jurusan == null && $re_kelas == null) {
-            $siswas = Siswa::paginate(20);
+        elseif ($re_tingkatan == null && $re_jurusan == null && $re_kelas == null) {
+            $siswas = Siswa::where('sekolah', $sklh)->paginate(20);
         }
 
-        $sekolahs = Sekolah::all();
+        $sekolahs = Sekolah::where('sekolah', $sklh)->get();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
         $kelases = Kelas::all();
@@ -61,7 +62,7 @@ class HasilIndividuController extends Controller
         //ambil data pertanyaan
         $pertanyaan = Pertanyaan::all();
 
-        //ambil data jawaban berdasarkan kategorinya
+        //ambil data jawaban berdasarkan kategorinya    
         foreach ($kategori as $k) {
             $kp[] = $data->where('kode_kategori', $k)->where('jawaban', 'Ya')->pluck('kode_pertanyaan');
             $jumlah_kp[] = $data->where('kode_kategori', $k)->where('jawaban', 'Ya')->pluck('kode_pertanyaan')->count();

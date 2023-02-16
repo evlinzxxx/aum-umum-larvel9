@@ -18,7 +18,7 @@ class JurusanController extends Controller
         //menampilkan index data jurusan
         $jurusans = Jurusan::all();
 
-        return view('pages.guru.sekolah.jurusan.index', compact((['jurusans'])));
+        return view('pages.admin.sekolah.jurusan.index', compact((['jurusans'])));
     }
 
     /**
@@ -29,7 +29,7 @@ class JurusanController extends Controller
     public function create()
     {
         //menampilkan form tambah jurusan
-        return view('pages.guru.sekolah.jurusan.create');
+        return view('pages.admin.sekolah.jurusan.create');
     }
 
     /**
@@ -62,7 +62,7 @@ class JurusanController extends Controller
     public function edit(Jurusan $jurusan)
     {
         //menampilkan data jurusan yang akan diedit
-        return view('pages.guru.sekolah.jurusan.edit', compact(['jurusan']));
+        return view('pages.admin.sekolah.jurusan.edit', compact(['jurusan']));
     }
 
     /**

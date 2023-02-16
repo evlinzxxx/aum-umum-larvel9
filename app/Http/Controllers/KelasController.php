@@ -18,7 +18,7 @@ class KelasController extends Controller
         //menampilkan index data kelas
         $kelass = Kelas::all();
 
-        return view('pages.guru.sekolah.kelas.index', compact(['kelass']));
+        return view('pages.admin.sekolah.kelas.index', compact(['kelass']));
     }
 
     /**
@@ -29,7 +29,7 @@ class KelasController extends Controller
     public function create()
     {
         //menampilkan form tambah kelas
-        return view('pages.guru.sekolah.kelas.create');
+        return view('pages.admin.sekolah.kelas.create');
     }
 
     /**
@@ -62,7 +62,7 @@ class KelasController extends Controller
     public function edit($kelas)
     {
         //menampilkan data kelas yang akan diedit
-        return view('pages.guru.sekolah.kelas.edit', compact(['kelas']));
+        return view('pages.admin.sekolah.kelas.edit', compact(['kelas']));
     }
 
     /**

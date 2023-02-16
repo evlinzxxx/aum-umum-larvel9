@@ -23,6 +23,7 @@ data-bs-backdrop="false"
   /></a>
 </div>
 <div class="pt-2 d-flex flex-column gap-5">
+  @if (Auth::guard('guru')->user())  
   <div class="menu p-0" style="margin-top: -25px">
     <p>Manajemen Utama</p>
     <a href="{{ route('home') }}" class="item-menu @if(Request::is('home')) active @endif">
@@ -44,14 +45,30 @@ data-bs-backdrop="false"
   </div>
   <div class="menu" style="margin-top: -25px">
     <p>Others</p>
-    <a href="{{ route('dashboard.guru.index') }}" class="item-menu @if(Request::is('dashboard/guru*')) active @elseif(Request::is('dashboard/siswa*')) active @elseif(Request::is('dashboard/ubahPassword*')) active @elseif(Request::is('dashboard/updatePassword*')) active  @endif">
+    <a href="{{ route('dashboard.siswa.index') }}" class="item-menu @if(Request::is('dashboard/guru*')) active @elseif(Request::is('dashboard/siswa*')) active @elseif(Request::is('dashboard/ubahPassword*')) active @elseif(Request::is('dashboard/updatePassword*')) active  @endif">
       <i class="icon ic-account"></i>
       Manajemen <br>Pengguna
     </a>
+    @endif
+    
+    @if (Auth::guard('admin')->user())  
+    <div class="menu" style="margin-top: -25px">
+      <p>Manajemen Admin</p>
+      <a href="{{ route('admin.home') }}" class="item-menu @if(Request::is('admin/home')) active @endif">
+        <i class="icon ic-stats"></i>
+        Dashboard
+      </a>
+      <a href="{{ route('dashboard.index.siswa') }}" class="item-menu @if(Request::is('dashboard/guru*')) active @elseif(Request::is('dashboard/siswa*')) active @elseif(Request::is('dashboard/index*')) active @elseif(Request::is('dashboard/ubahPassword*')) active @elseif(Request::is('dashboard/updatePassword*')) active @endif">
+        <i class="icon ic-account"></i>
+        Manajemen <br>Pengguna
+      </a>
     <a href="{{ route('dashboard.sekolah.index') }}" class="item-menu @if(Request::is('dashboard/sekolah*')) active @elseif(Request::is('dashboard/jurusan*')) active  @elseif(Request::is('dashboard/tingkatan*')) active @elseif(Request::is('dashboard/kelas*')) active  @endif">
       <i class="icon ic-settings"></i>
       Manajemen <br>Sekolah
     </a>
+    </div>
+    @endif
+
     <a href="{{ route('logout') }}" class="item-menu">
       <i class="icon ic-logout"></i>
       Logout

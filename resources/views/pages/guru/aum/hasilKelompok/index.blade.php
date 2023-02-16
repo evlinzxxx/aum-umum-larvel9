@@ -47,17 +47,7 @@
 <div class="card p-4 mb-5">
     <h3>Cari Data</h3>
     <form action="{{ route('dashboard.hasilKelompok.index') }}" method="get">
-        <div class="row">
-            <div class="col-4">
-                <label class="visually" style="font-size: 14px"  for="sekolah">Sekolah</label>
-                <select class="form-select" name="cari_sekolah" id="sekolah">
-                    <option disabled selected> {{ $request->cari_sekolah }}</option>
-                    @foreach ($sekolahs as $sekolah)
-                    <option value="{{ $sekolah->sekolah }}">{{ $sekolah->sekolah }}</option>
-                    @endforeach
-                </select>
-            </div>
-        
+        <div class="row">        
             <div class="col-2">
                 <label class="visually" style="font-size: 14px" for="tingkatan">Tingkatan</label>
                 <select class="form-select" name="cari_tingkatan" id="tingkatan">

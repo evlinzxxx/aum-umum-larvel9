@@ -59,7 +59,7 @@
           <th>Jumlah Tertinggi</th>
           <th>Jumlah Terendah</th>
           <th>Jumlah Masalah</th>
-          <th>Rata-rata Masalah</th>
+          <th>Rata-rata Masalah (%)</th>
         </tr>
       </thead>
       <tbody>
@@ -89,7 +89,7 @@
           <td class="text-center">{{ $jml_max_masalah }}</td>
           <td class="text-center">{{ $jml_min_masalah }}</td>
           <td class="text-center">{{ $jml_total_masalah }}</td>
-          <td class="text-center">{{ $jml_rata_masalah }}</td>
+          <td class="text-center">{{ $jml_rata_masalah . "%" }}</td>
         </tr>
       </tbody>
     </table>

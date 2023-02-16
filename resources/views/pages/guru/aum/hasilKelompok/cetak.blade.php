@@ -92,17 +92,19 @@
       {{-- End Graph Inforamtion --}}
 
       {{-- Start Conclusion Inforamtion --}}
-      <div style="margin-left: 80px; margin-right:80px;border: 0.1px solid;margin-top:25px">
-        <h4 align="center" style="color:#1f77d5; margin-bottom:20px">Kesimpulan</h4>
-        <div style="font-size: 10px; margin-top:-20px;padding:20px">
+      <div style="margin-left: 80px; margin-right:80px;border: 0.1px solid;margin-top:15px">
+        <h4 align="center" style="color:#1f77d5; margin-bottom:15px">Kesimpulan</h4>
+        <div style="font-size: 10px; margin-top:-30px;padding:20px">
             Berdasarkan hasil pengolahan AUM UMUM, dapat disimpulan bahwa kelas {{ $tingkatan }} {{ $jurusan }} {{ $kelas }} memiliki masalah pada Bidang<span style="font-weight: bold; color:#eb5d1e"> {{ $kode_masalah }}  </span> yaitu 
             dengan tingkat persentase masalah sebesar <span style="font-weight: bold; color:#ff0000"> {{ $persen_max }} % </span>.Setelah pengisian AUM UMUM ini, diharapkan untuk siswa di kelas ini
             bisa mengonsultasikan permasalahan yang dirasa cukup berat. Bisa menemui Guru Bimbingan Konseling (BK), Psikolog, maupun Orang-orang yang kamu percayai untuk mecurahkan dan mampu membantu mengatasi masalahMu.
             <br><br>
             Bimbingan yang diberikan kepada kelas {{ $tingkatan }} {{ $jurusan }} {{ $kelas }}  secara menyeluruh adalah bimbingan pribadi terutama pada bidang untuk mendalami masalah {{ $kode_masalah }}.
         </div>
+        </div>
       {{-- End Conclusion Inforamtion --}}
-        
+      
+
             <style type="text/css">
               table tr td,
               table tr th{

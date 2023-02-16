@@ -21,9 +21,9 @@ class HasilKelompok extends Model
     {
         return $this->belongsTo(Pertanyaan::class, 'kode_pertanyaan','kode_pertanyaan');
     }
-    public function siswa()
+    public function siswas()
     {
-        return $this->hasMany(Siswa::class);
+        return $this->hasMany(Siswa::class, 'nisn','nisn');
     }
 
     public function categories()

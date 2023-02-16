@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Auth\ChangePasswordController;
@@ -47,22 +47,19 @@ Route::group(['middleware' => 'preventBackHistory'], function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/postLogin', [LoginController::class, 'login'])->name('postLogin');
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
+    
+    Route::get('/admin/home', [DashboardController::class, 'indexAdmin'])->middleware('auth:admin')->name('admin.home');
+    
     Route::get('/siswa/home', [HomeController::class, 'index'])->middleware('auth:user')->name('siswa.home');
-
+    
     Route::get('/home', [DashboardController::class, 'index'])->middleware('auth:guru')->name('home');
-
-
+    
     Route::middleware('auth:guru')->name('dashboard.')->prefix('dashboard')->group(function () {
         Route::middleware('auth:guru')->group(function () {
-            Route::resource('guru', GuruController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
             Route::resource('siswa', SiswaController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
-            Route::resource('sekolah', SekolahController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-            Route::resource('tingkatan', TingkatanController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-            Route::resource('jurusan', JurusanController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-            Route::resource('kelas', KelasController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
             Route::resource('kategori', KategoriMasalahController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
             Route::resource('pertanyaan', PertanyaanController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+            Route::get('/guru/show/{guru}', [GuruController::class, 'showGuru'])->name('show.guru');
             Route::get('/hasilIndividu/index', [HasilIndividuController::class, 'index'])->name('hasilIndividu.index');
             Route::get('/hasilIndividu/{user}', [HasilIndividuController::class, 'showGuru'])->name('hasilIndividu.show');
             Route::post('/cetakPdf/{user}', [HasilIndividuController::class, 'cetakGuru'])->name('hasilIndividu.cetakPdf');
@@ -75,6 +72,22 @@ Route::group(['middleware' => 'preventBackHistory'], function () {
             Route::delete('/hasilKelompok/destroy/{sekolah}/{tingkatan}/{jurusan}/{kelas}', [HasilKelompokController::class, 'destroy'])->name('hasilKelompok.destroy');
             Route::get('/ubahPassword/{guru}', [ChangePasswordController::class, 'ubahPasswordGuru'])->name('ubahPassword');
             Route::post('/updatePassword/{guru}', [ChangePasswordController::class, 'updatePasswordGuru'])->name('updatePassword');
+        });
+    });
+
+
+    Route::middleware('auth:admin')->name('dashboard.')->prefix('dashboard')->group(function () {
+        Route::middleware('auth:admin')->group(function () {
+            Route::resource('guru', GuruController::class)->only(['index', 'show', 'edit', 'update', 'destroy']);
+            Route::get('/index', [SiswaController::class, 'indexAdmin'])->name('index.siswa');
+            Route::get('/siswa/edit/{siswa}', [SiswaController::class, 'editAdmin'])->name('edit.siswa');
+            Route::put('/siswa/update/{siswa}', [SiswaController::class, 'updateAdmin'])->name('update.siswa');
+            Route::get('/siswa/show/{siswa}', [SiswaController::class, 'showAdmin'])->name('show.siswa');
+            Route::delete('/siswa/delete/{siswa}', [SiswaController::class, 'destroyAdmin'])->name('destroy.siswa');
+            Route::resource('sekolah', SekolahController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+            Route::resource('tingkatan', TingkatanController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+            Route::resource('jurusan', JurusanController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+            Route::resource('kelas', KelasController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         });
     });
 

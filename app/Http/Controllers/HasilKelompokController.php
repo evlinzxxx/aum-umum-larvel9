@@ -7,6 +7,7 @@ use App\Models\HasilKelompok;
 use App\Models\Jurusan;
 use App\Models\KategoriMasalah;
 use App\Models\Kelas;
+use App\Models\LembarJawaban;
 use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Pertanyaan;
 use App\Models\Sekolah;
@@ -20,8 +21,9 @@ class HasilKelompokController extends Controller
 
     public function pilihShow(Request $request)
     {
+        $sklh = auth()->user()->sekolah;
         //data sekolah,tingkatan,jurusan,dan kelas untuk daftar searching
-        $sekolahs = Sekolah::all();
+        $sekolahs = Sekolah::where('sekolah', $sklh)->get();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
         $kelases = Kelas::all();
@@ -32,31 +34,31 @@ class HasilKelompokController extends Controller
 
     public function index(Request $request)
     {
+        $sklh = auth()->user()->sekolah;
         //menampilkan hasil analisis kelompok yang sudah tersedia
-        $sekolahs = Sekolah::all();
+        $sekolahs = Sekolah::where('sekolah', $sklh)->get();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
         $kelases = Kelas::all();
 
         //request data cari hasil kelompok berdasarkan sekolah,tingkatan,jurusan,dan kelas
-        $re_sekolah = $request->cari_sekolah;
         $re_tingkatan = $request->cari_tingkatan;
         $re_jurusan = $request->cari_jurusan;
         $re_kelas = $request->cari_kelas;
 
         //hitung hasil analisis kelompok
-        $cek = HasilKelompok::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->count();
+        $cek = HasilKelompok::where('sekolah', $sklh)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->count();
 
         //jika tidak ada data hasil analisis kelompok
         if ($cek == null) {
             return back()->with('failed', 'Siswa Kelas ini belum melakukan pengisian AUM Umum');
-        } 
+        }
         //jika ada hasil analisis kelompok
-        elseif ($re_sekolah != null && $re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
-            $data1 = HasilKelompok::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('sekolah')->first();
-            $data2 = HasilKelompok::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('tingkatan')->first();
-            $data3 = HasilKelompok::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('jurusan')->first();
-            $data4 = HasilKelompok::where('sekolah', $re_sekolah)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('kelas')->first();
+        elseif ($re_tingkatan != null && $re_jurusan != null && $re_kelas != null) {
+            $data1 = HasilKelompok::where('sekolah', $sklh)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('sekolah')->first();
+            $data2 = HasilKelompok::where('sekolah', $sklh)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('tingkatan')->first();
+            $data3 = HasilKelompok::where('sekolah', $sklh)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('jurusan')->first();
+            $data4 = HasilKelompok::where('sekolah', $sklh)->where('tingkatan', $re_tingkatan)->where('jurusan', $re_jurusan)->where('kelas', $re_kelas)->pluck('kelas')->first();
 
             return view('pages.guru.aum.hasilKelompok.index', compact(['data1', 'data2', 'data3', 'data4', 'sekolahs', 'tingkatans', 'jurusans', 'kelases', 'request']));
         }
@@ -65,8 +67,9 @@ class HasilKelompokController extends Controller
 
     public function pilih(Request $request)
     {
+        $sklh = auth()->user()->sekolah;
         //data sekolah,tingkatan,jurusan,dan kelas untuk daftar searching
-        $sekolahs = Sekolah::all();
+        $sekolahs = Sekolah::where('sekolah', $sklh)->get();
         $tingkatans = Tingkatan::all();
         $jurusans = Jurusan::all();
         $kelases = Kelas::all();
@@ -77,12 +80,12 @@ class HasilKelompokController extends Controller
     public function hitung(Request $request)
     {
         //jika search data yang akan ditambahkan blm diisi
-        if ($request->sekolah == null && $request->tingkatan == null && $request->jurusan == null && $request->kelas == null) {
+        if ($request->tingkatan == null && $request->jurusan == null && $request->kelas == null) {
             return back()->with('failed', 'Pilih Sekolah dan Kelas terlebih dahulu!');
         }
 
         //request data cari sekolah,tingkatan,jurusan,dan kelas
-        $sekolah = $request->sekolah;
+        $sekolah = auth()->user()->sekolah;
         $tingkatan = $request->tingkatan;
         $jurusan = $request->jurusan;
         $kelas = $request->kelas;
@@ -101,7 +104,7 @@ class HasilKelompokController extends Controller
         //jika ada
         if ($siswa >= 1) {
             return view('pages.guru.aum.hasilKelompok.blankHasil', compact(['sekolah', 'tingkatan', 'jurusan', 'kelas']));
-        } 
+        }
         //jika tidak ada
         else {
             //ambil nilai hasil individu siswa di kelas yang dipilih
@@ -136,7 +139,7 @@ class HasilKelompokController extends Controller
                     'jumlah_tertinggi'          => $jml_tertinggi[$i],
                     'jumlah_terendah'           => $jml_terendah[$i],
                     'jumlah_masalah'            => $jml_masalah[$i],
-                    'rata_jumlah'               => $rata_masalah[$i],
+                    'rata_jumlah'               => number_format($rata_masalah[$i], 2, '.', ''),
                     'created_at'                => NOW(),
                     'updated_at'                => NOW()
                 ]);
@@ -223,55 +226,55 @@ class HasilKelompokController extends Controller
 
     public function cetakPdf($sekolah, $tingkatan, $jurusan, $kelas)
     {
-         //ambil data hasil kelompok berdasarkan kelas
-         $hasils = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->get();
-         //ambil data kategori
-         $kategoris = KategoriMasalah::all()->sortBy('created_at');
-         $hasil = $kategoris->pluck('kode_kategori');
-         //hitung jumlah pertanyaan
-         $jml_pertanyaan = Pertanyaan::all()->count();
- 
-         $kategories = $kategoris->pluck('kode_kategori');
-         //ambil data hasil kelompok berdarkan kelas yang dipilih 
-         foreach ($kategories as $k) {
-             $data[] = $hasils->where('kode_kategori', $k)->pluck('rata_jumlah');
-             $dat[] = $hasils->where('kode_kategori', $k)->pluck('jumlah_tertinggi');
-         }
- 
-         //ambil nilai jumlah masalah tertinggi
-         $max_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('jumlah_tertinggi')->toArray();
-         $jml_max_masalah = array_sum($max_mslh);
- 
-         //ambil nilai jumlah masalah terendah
-         $min_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('jumlah_terendah')->toArray();
-         $jml_min_masalah = array_sum($min_mslh);
- 
-         //ambil nilai jumlah masalah
-         $total_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('jumlah_masalah')->toArray();
-         $jml_total_masalah = array_sum($total_mslh);
- 
-         //ambil nilai jumlah rata masalah
-         $rata_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('rata_jumlah')->toArray();
-         $jml_rata_masalah = array_sum($rata_mslh);
- 
-         //ambil nilai hasil individu siswa di kelas yang dipilih
-         $cek_siswa = HasilIndividu::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('nisn')->toArray();
-         $cek = Siswa::all();
- 
-         //hitung nilai responden
-         $total_responden = (count($cek_siswa)) / 10;
- 
-         //nilai persentase tertinggi
-         $persen_max = max($data)->first();
-         $kat = HasilKelompok::where('rata_jumlah', $persen_max)->pluck('kode_kategori');
-         $kate = [];
-         foreach ($kat as $value) {
-             $kate[] = $value;
-         }
-         $kateg = implode(',', $kate);
- 
-         //ambil nama kategori dengan persentase masalah tertinggi
-         $kode_masalah = KategoriMasalah::where('kode_kategori', $kateg)->pluck('nama_kategori')->first();
+        //ambil data hasil kelompok berdasarkan kelas
+        $hasils = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->get();
+        $hasilz = HasilIndividu::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->get();
+        //ambil data kategori
+        $kategoris = KategoriMasalah::all()->sortBy('created_at');
+        $hasil = $kategoris->pluck('kode_kategori');
+        //hitung jumlah pertanyaan
+        $jml_pertanyaan = Pertanyaan::all()->count();
+
+        $kategories = $kategoris->pluck('kode_kategori');
+        //ambil data hasil kelompok berdarkan kelas yang dipilih 
+        foreach ($kategories as $k) {
+            $data[] = $hasils->where('kode_kategori', $k)->pluck('rata_jumlah');
+            $dat[] = $hasils->where('kode_kategori', $k)->pluck('jumlah_tertinggi');
+        }
+
+        //ambil nilai jumlah masalah tertinggi
+        $max_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('jumlah_tertinggi')->toArray();
+        $jml_max_masalah = array_sum($max_mslh);
+
+        //ambil nilai jumlah masalah terendah
+        $min_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('jumlah_terendah')->toArray();
+        $jml_min_masalah = array_sum($min_mslh);
+
+        //ambil nilai jumlah masalah
+        $total_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('jumlah_masalah')->toArray();
+        $jml_total_masalah = array_sum($total_mslh);
+
+        //ambil nilai jumlah rata masalah
+        $rata_mslh = HasilKelompok::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('rata_jumlah')->toArray();
+        $jml_rata_masalah = array_sum($rata_mslh);
+
+        //ambil nilai hasil individu siswa di kelas yang dipilih
+        $cek_siswa = HasilIndividu::where('sekolah', $sekolah)->where('tingkatan', $tingkatan)->where('jurusan', $jurusan)->where('kelas', $kelas)->pluck('nisn')->toArray();
+
+        //hitung nilai responden
+        $total_responden = (count($cek_siswa)) / 10;
+
+        //nilai persentase tertinggi
+        $persen_max = max($data)->first();
+        $kat = HasilKelompok::where('rata_jumlah', $persen_max)->pluck('kode_kategori');
+        $kate = [];
+        foreach ($kat as $value) {
+            $kate[] = $value;
+        }
+        $kateg = implode(',', $kate);
+
+        //ambil nama kategori dengan persentase masalah tertinggi
+        $kode_masalah = KategoriMasalah::where('kode_kategori', $kateg)->pluck('nama_kategori')->first();
 
 
         $html = '<img src="' . $_POST['chart_inputs'] . '">';
@@ -280,7 +283,7 @@ class HasilKelompokController extends Controller
             compact([
                 'html', 'data', 'kategories', 'sekolah', 'jurusan', 'tingkatan', 'kelas', 'hasil',
                 'jml_pertanyaan', 'jml_max_masalah', 'jml_min_masalah', 'jml_total_masalah',
-                'jml_rata_masalah', 'total_responden', 'persen_max', 'kode_masalah', 'hasils'
+                'jml_rata_masalah', 'total_responden', 'persen_max', 'kode_masalah', 'hasils',
             ])
         );
 

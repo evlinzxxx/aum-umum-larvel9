@@ -16,7 +16,7 @@ class SekolahController extends Controller
     {
         //menampilkan index data sekolah
         $sekolahs = Sekolah::all();
-        return view('pages.guru.sekolah.index', compact(['sekolahs']));
+        return view('pages.admin.sekolah.index', compact(['sekolahs']));
     }
 
     /**
@@ -27,7 +27,7 @@ class SekolahController extends Controller
     public function create()
     {
         //menampilkan form tambah sekolah
-        return view('pages.guru.sekolah.create');
+        return view('pages.admin.sekolah.create');
     }
 
     /**
@@ -60,7 +60,7 @@ class SekolahController extends Controller
     public function edit(Sekolah $sekolah)
     {
         //menampilkan data sekolah yang akan diedit
-        return view('pages.guru.sekolah.edit', compact(['sekolah']));
+        return view('pages.admin.sekolah.edit', compact(['sekolah']));
     }
 
     /**

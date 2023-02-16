@@ -12,6 +12,7 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
+
     /**
      * Where to redirect users after login.
      *
@@ -26,6 +27,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('guest:admin')->except('logout');
         $this->middleware('guest:user')->except('logout');
         $this->middleware('guest:guru')->except('logout');
     }
@@ -42,8 +44,14 @@ class LoginController extends Controller
         $password = $request->password;
         $hitung = strlen($tampung);
 
+        //10 untuk id(admin)
+        if ($hitung == 9) {
+            $id = $request->number;
+            if (Auth::guard('admin')->attempt(['id' => $id, 'password' => $password], $request->get('remember'))) {
+                return redirect()->intended('/admin/home');
+            }
         //10 untuk nisn(siswa)
-        if ($hitung == 10) {
+        }elseif ($hitung == 10) {
             $nisn = $request->number;
             if (Auth::guard('user')->attempt(['nisn' => $nisn, 'password' => $password], $request->get('remember'))) {
                 return redirect()->intended('/siswa/home');
@@ -65,6 +73,8 @@ class LoginController extends Controller
             Auth::guard('guru')->logout();
         } elseif (Auth::guard('user')->check()) {
             Auth::guard('user')->logout();
+        } elseif (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
         }
 
         return redirect('/');

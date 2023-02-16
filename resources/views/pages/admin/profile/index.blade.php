@@ -7,13 +7,13 @@
     <header>
       <h3>Data Pengguna &raquo; Data Guru</h3>
         <div class="data mt-4" style="display: flex">
+            <a href="{{ route('dashboard.index.siswa') }}" class="item-menu">
+                <i class="icon ic-stats"></i>
+                Data Siswa
+            </a>
             <a href="{{ route('dashboard.guru.index') }}" class="item-menu @if(Request::is('dashboard/guru')) active @endif">
                 <i class="icon ic-stats"></i>
                 Data Guru
-            </a>
-            <a href="{{ route('dashboard.siswa.index') }}" class="item-menu">
-                <i class="icon ic-stats"></i>
-                Data Siswa
             </a>
         </div>
     </header>

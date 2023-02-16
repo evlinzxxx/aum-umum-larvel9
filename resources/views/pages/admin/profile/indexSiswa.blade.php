@@ -7,13 +7,13 @@
     <header>
       <h3>Data Pengguna &raquo; Data Siswa</h3>
         <div class="data mt-4" style="display: flex">
-            {{-- <a href="{{ route('dashboard.guru.index') }}" class="item-menu ">
-                <i class="icon ic-stats"></i>
-                Data Guru
-            </a> --}}
-            <a href="{{ route('dashboard.siswa.index') }}" class="item-menu @if(Request::is('dashboard/siswa')) active @endif">
+            <a href="{{ route('dashboard.index.siswa') }}" class="item-menu @if(Request::is('dashboard/index')) active @endif">
                 <i class="icon ic-stats"></i>
                 Data Siswa
+            </a>
+            <a href="{{ route('dashboard.guru.index') }}" class="item-menu ">
+                <i class="icon ic-stats"></i>
+                Data Guru
             </a>
         </div>
     </header>
@@ -41,9 +41,9 @@
 {{-- Start searching profile --}}
 <div class="card p-4 mb-5">
     <h3>Cari Data</h3>
-    <form action="{{ route('dashboard.siswa.index') }}" method="get">
+    <form action="{{ route('dashboard.index.siswa') }}" method="get">
         <div class="row">
-            {{-- <div class="col-4">
+            <div class="col-4">
                 <label class="visually" style="font-size: 14px"  for="sekolah">Sekolah</label>
                 <select class="form-select" name="cari_sekolah" id="sekolah">
                     <option disabled selected> {{ $request->cari_sekolah }}</option>
@@ -51,7 +51,7 @@
                     <option value="{{ $sekolah->sekolah }}">{{ $sekolah->sekolah }}</option>
                     @endforeach
                 </select>
-            </div> --}}
+            </div>
             <div class="col-2">
                 <label class="visually" style="font-size: 14px" for="tingkatan">Tingkatan</label>
                 <select class="form-select" name="cari_tingkatan" id="tingkatan">
@@ -109,14 +109,14 @@
                 <td>{{ $siswa->nama }}<br><i class="fa-solid fa-envelope"></i> <span class="text-primary" style="font-style:italic">{{ $siswa->email }}</span></td>
                 <td><img src="{{ asset('uploads/siswa/' . $siswa->url_photo) }}" width="100" alt=""></td>
                 <td>
-                    <form action="{{ route('dashboard.siswa.destroy',$siswa->nisn) }}" id="delete-form{{ $siswa->nisn }}" method="post">
+                    <form action="{{ route('dashboard.destroy.siswa',$siswa->nisn) }}" id="delete-form{{ $siswa->nisn }}" method="post">
                         @csrf
                         @method('delete')
                         <div class="btn-group" >
-                            <a href="{{ route('dashboard.siswa.show',['siswa'=>$siswa->nisn]) }}" class="btn btn-primary">
+                            <a href="{{ route('dashboard.show.siswa',['siswa'=>$siswa->nisn]) }}" class="btn btn-primary">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
-                            <a href="{{ route('dashboard.siswa.edit',['siswa'=>$siswa->nisn]) }}" class="btn btn-warning">
+                            <a href="{{ route('dashboard.edit.siswa',['siswa'=>$siswa->nisn]) }}" class="btn btn-warning">
                                 <i class="fas fa-pen"></i>
                             </a>
                             <button type="submit" class="btn btn-danger" onclick="if(confirm('Yakin hapus data?')){
