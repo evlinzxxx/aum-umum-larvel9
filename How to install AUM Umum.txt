@@ -6,3 +6,4 @@ Cara menginstall AUM Umum SMA
 5. Ketik php artisan db:seed di terminal
 6. Import database pertanyaans.sql dan kategori_masalahs.sql ke database di phpmyadmin
 7. Ketik php artisan serve di terminal untuk memulai menggunakan aplikasi ini.
+8. Untuk Login sebagai admin, Anda bisa mengisi NIP/NISN dengan 123456789 dan password admin123
